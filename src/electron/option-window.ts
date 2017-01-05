@@ -24,12 +24,14 @@ export class OptionWindow {
         });
 
         this.win.on('closed', () => {
-            this.win = null
+            this.application.reloadSettings();
+            this.win = null;
         });
     }
 
     run(): void{
         this.win.loadURL(`file://${__dirname}/../browser/index.html#/option`);
+        this.win.show();
 
     }
 
