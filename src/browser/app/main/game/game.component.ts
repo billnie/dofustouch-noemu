@@ -3,6 +3,7 @@ import { Tab } from './../tab/tab';
 import { ShortCuts } from './../../shortcuts/shortcuts';
 import * as async from 'async';
 import { IpcRendererService } from './../../electron/ipcrenderer.service';
+import { SettingsService } from '../../settings/settings.service';
 
 const settings = (<any>global).nodeRequire('electron-settings');
 
@@ -20,7 +21,8 @@ export class GameComponent {
     constructor(
         @Inject('Window') private window: Window,
         private ipcRendererService: IpcRendererService,
-        private zone: NgZone
+        private zone: NgZone,
+        private settingsService: SettingsService
     ) {
 
     }
@@ -51,10 +53,13 @@ export class GameComponent {
         });
 
         // event -> electron ask for reload setting
-        this.ipcRendererService.on('reload-settings', (event: any, arg: any) => {
+        this.ipcRendererService.on('reload-shortcuts', (event: any, arg: any) => {
+            console.log('reload-shortcuts');
             if (this.tab.isLogged) {
+                console.log('reload-shortcuts')
                 // unbind all registered shortcuts
                 this.shortCuts.unBindAll();
+                //this.shortCuts.unBind('i');
 
                 // re-bind new shortcuts
                 this.bindShortcuts();
@@ -65,27 +70,29 @@ export class GameComponent {
     private bindShortcuts(): void {
 
         // end turn
-        this.shortCuts.bind(settings.getSync('option.shortcuts.diver.end_turn'), () => {
+        this.shortCuts.bind(this.settingsService.option.shortcuts.diver.end_turn, () => {
             (<any>this.wGame).gui.fightManager.finishTurn()
         });
 
         // spell
-        async.forEachOf(settings.getSync('option.shortcuts.spell'), (shortcut: string, index: number) => {
+        async.forEachOf(this.settingsService.option.shortcuts.spell, (shortcut: string, index: number) => {
             this.shortCuts.bind(shortcut, () => {
                 (<any>this.wGame).gui.shortcutBar.panels.spell.slotList[index].tap();
             });
         });
 
         // item
-        async.forEachOf(settings.getSync('option.shortcuts.item'), (shortcut: string, index: number) => {
+        async.forEachOf(this.settingsService.option.shortcuts.item, (shortcut: string, index: number) => {
             this.shortCuts.bind(shortcut, () => {
                 (<any>this.wGame).gui.shortcutBar.panels.item.slotList[index].tap();
             });
         });
 
         // interfaces
-        async.forEachOf(settings.getSync('option.shortcuts.interface'), (shortcut: string, key: string) => {
-            (<any>this.wGame).gui.menuBar._icons._childrenList.forEach((element: any, index: number) => {
+        async.forEachOf((<any>this.settingsService.option.shortcuts).interface, (shortcut: string, key: string) => {
+            console.log(shortcut);
+            console.log(key);
+            /*(<any>this.wGame).gui.menuBar._icons._childrenList.forEach((element: any, index: number) => {
                 if (element.id.toUpperCase() == key.toUpperCase()) {
                     this.shortCuts.bind(shortcut, () => {
                         let newIndex = index;
@@ -93,7 +100,7 @@ export class GameComponent {
                     });
                     return;
                 }
-            });
+            });*/
         });
     }
 
