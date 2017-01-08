@@ -1,5 +1,5 @@
 import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
-import { SettingsService } from '../../settings/settings.service';
+import { SettingsService } from './../../../shared/settings/settings.service';
 
 
 //const { ipcRenderer } = (<any>global).nodeRequire('electron');

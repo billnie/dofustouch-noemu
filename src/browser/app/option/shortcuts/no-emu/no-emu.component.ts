@@ -1,6 +1,6 @@
 import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
-import { SettingsService } from '../../../settings/settings.service';
-import { InputComponent } from '../input/input.component'
+import { SettingsService } from './../../../../shared/settings/settings.service';
+import { InputComponent } from './../input/input.component'
 
 //const { ipcRenderer } = (<any>global).nodeRequire('electron');
 

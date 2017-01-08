@@ -2,7 +2,7 @@ import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@an
 import {TabService} from './tab/tab.service';
 import {Tab} from './tab/tab';
 import { ShortCuts } from './../shortcuts/shortcuts';
-import { IpcRendererService } from './../electron/ipcrenderer.service';
+import { IpcRendererService } from '../../shared/electron/ipcrenderer.service';
 
 //const { ipcRenderer } = (<any>global).nodeRequire('electron');
 

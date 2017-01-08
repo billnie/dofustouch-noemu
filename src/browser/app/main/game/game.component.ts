@@ -2,8 +2,8 @@ import { Component, Optional, Input, Inject, NgZone } from '@angular/core';
 import { Tab } from './../tab/tab';
 import { ShortCuts } from './../../shortcuts/shortcuts';
 import * as async from 'async';
-import { IpcRendererService } from './../../electron/ipcrenderer.service';
-import { SettingsService } from '../../settings/settings.service';
+import { IpcRendererService } from '../../../shared/electron/ipcrenderer.service';
+import { SettingsService } from './../../../shared/settings/settings.service';
 
 const settings = (<any>global).nodeRequire('electron-settings');
 

@@ -1,5 +1,5 @@
-import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
-import { SettingsService } from '../../settings/settings.service';
+import {Component, OnInit} from '@angular/core';
+import { SettingsService } from './../../../shared/settings/settings.service';
 import { ISettings } from '../../../../shared/settings';
 
 
@@ -17,7 +17,7 @@ interface Resolution {
 
     }
 })
-export class GeneralComponent {
+export class GeneralComponent implements OnInit{
 
     private _resolution: string;
 
@@ -36,7 +36,7 @@ export class GeneralComponent {
 
     public setResolution(value: string): void {
         let aValue = value.split(';');
-        
+
         let resolution = {
             x: parseInt(aValue[0]),
             y: parseInt(aValue[1])
@@ -47,7 +47,10 @@ export class GeneralComponent {
 
     ngOnInit(): void {
         // fixe the two way binding object by this tricks
+        console.log('onInit General');
         this._resolution = this.settingsService.option.general.resolution.x+';'+this.settingsService.option.general.resolution.y;
+
+        console.log(this._resolution);
 
     }
 

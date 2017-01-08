@@ -27,12 +27,12 @@ export class ShortCuts {
     }
 
     public unBind(shortcut: string): void {
-        (<any>this.window).key.unBind(shortcut);
+        (<any>this.window).key.unbind(shortcut);
 
-        let index = this.shortcuts.indexOf(shortcut);
+        /*let index = this.shortcuts.indexOf(shortcut);
 
         if(index !== -1){
             this.shortcuts.splice(index, 1);
-        }
+        }*/
     }
 }

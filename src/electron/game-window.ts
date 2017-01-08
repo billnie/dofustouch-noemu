@@ -32,7 +32,7 @@ export class GameWindow {
 
     public run(): void {
         // load the app
-        this.win.loadURL(`file://${__dirname}/../browser/index.html#/main`,
+        this.win.loadURL(`file://${__dirname}/../browser/index.html`,
             { userAgent: this.generateUA() });
 
         // set menu

@@ -1,5 +1,5 @@
 import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
-import { IpcRendererService } from './electron/ipcrenderer.service';
+import { IpcRendererService } from '../shared/electron/ipcrenderer.service';
 
 //const { ipcRenderer } = (<any>global).nodeRequire('electron');
 

@@ -12,6 +12,7 @@
     map: {
       // our app is within the app folder
       app: './',
+      //remote: 'http://dofustouch.no-emu.com/test/',
 
       // angular bundles
       '@angular/core': 'npm:@angular/core/bundles/core.umd.js',

@@ -11,17 +11,17 @@ export class Application {
     private gameWindows: GameWindow[] = [];
 
 
-    constructor(){
+    constructor() {
         settings.defaults(DefaultSettings);
         settings.resetToDefaultsSync();
         this.devMode = true/*settings.getSync('option.general.developer-mode')*/;
     }
 
     run(): void {
-      this.addWindow();
+        this.addWindow();
     }
 
-    reloadSettings(): void{
+    reloadSettings(): void {
         // re bind shortcuts per game window
         this.gameWindows.forEach((gWindow) => {
             gWindow.shortCuts.reload();
