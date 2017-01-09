@@ -1,14 +1,11 @@
 import {NgModule}            from '@angular/core';
 import {RouterModule}        from '@angular/router';
 
-/* MainComponent */
-import {MainComponent} from './main/main.component';
-
 @NgModule({
     imports: [RouterModule.forRoot([
         {
             path: 'main',
-            component: MainComponent
+            loadChildren: 'app/app/main/main.module#MainModule'
         },
         {
             path: 'option',

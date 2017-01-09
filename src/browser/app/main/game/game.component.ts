@@ -1,18 +1,16 @@
-import { Component, Optional, Input, Inject, NgZone } from '@angular/core';
+import { Component, Input, Inject, NgZone, OnInit, AfterViewInit } from '@angular/core';
 import { Tab } from './../tab/tab';
 import { ShortCuts } from './../../shortcuts/shortcuts';
 import * as async from 'async';
 import { IpcRendererService } from '../../../shared/electron/ipcrenderer.service';
 import { SettingsService } from './../../../shared/settings/settings.service';
 
-const settings = (<any>global).nodeRequire('electron-settings');
-
 @Component({
     selector: 'game',
     templateUrl: 'app/main/game/game.component.html',
     styleUrls: ['app/main/game/game.component.css']
 })
-export class GameComponent {
+export class GameComponent implements OnInit, AfterViewInit {
 
     @Input() private tab: Tab;
     private wGame: Window;
@@ -54,12 +52,11 @@ export class GameComponent {
 
         // event -> electron ask for reload setting
         this.ipcRendererService.on('reload-shortcuts', (event: any, arg: any) => {
-            console.log('reload-shortcuts');
+
             if (this.tab.isLogged) {
-                console.log('reload-shortcuts')
+                console.log('reload-shortcuts');
                 // unbind all registered shortcuts
                 this.shortCuts.unBindAll();
-                //this.shortCuts.unBind('i');
 
                 // re-bind new shortcuts
                 this.bindShortcuts();

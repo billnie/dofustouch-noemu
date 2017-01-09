@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { SettingsService } from './../../../shared/settings/settings.service';
-import { ISettings } from '../../../../shared/settings';
 
-
-//const { ipcRenderer } = (<any>global).nodeRequire('electron');
 interface Resolution {
     name: string;
     value: string;

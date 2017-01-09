@@ -1,6 +1,3 @@
-/// <reference path="../../../../node_modules/@types/keymaster/index.d.ts" />
-/// <reference path="../../../../node_modules/@types/electron/index.d.ts" />
-
 //interface Window { key: Keymaster; }
 
 export class ShortCuts {

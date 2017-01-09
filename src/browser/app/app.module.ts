@@ -1,8 +1,5 @@
-const {ipcRenderer} = (<any>global).nodeRequire('electron');
-
 /* Angular 2 */
-import {NgModule}      from '@angular/core';
-import {RouterModule}   from '@angular/router';
+import {NgModule, APP_INITIALIZER}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {APP_BASE_HREF} from '@angular/common';
@@ -18,17 +15,7 @@ import {SharedModule} from './../shared/shared.module';
 
 /* AppComponent */
 import {AppComponent} from './app.component';
-
-/* MainComponent */
-import {MainComponent} from './main/main.component';
-import {GameComponent} from './main/game/game.component';
-import {TabService} from './main/tab/tab.service';
-
-
-import { SettingsService } from './../shared/settings/settings.service';
-import { IpcRendererService } from './../shared/electron/ipcrenderer.service';
-
-
+import {AppService} from './app.service'
 
 @NgModule({
     imports: [
@@ -41,12 +28,15 @@ import { IpcRendererService } from './../shared/electron/ipcrenderer.service';
     ],
     declarations: [
         AppComponent,
-        GameComponent,
-        MainComponent,
     ],
     providers: [
-        TabService,
-        {provide: 'Window', useValue: window},
+        AppService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (config: AppService) => () => config.load(),
+            deps: [AppService],
+            multi: true
+        },
         {provide: APP_BASE_HREF, useValue: '/'} // hack to work routing on electron
     ],
     bootstrap: [AppComponent]
