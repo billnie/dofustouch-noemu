@@ -1,7 +1,7 @@
 import {NgModule}           from '@angular/core';
 
-import {DemoRoutingModule}   from './demo-routing.module';
-import {DemoComponent}    from './demo.component';
+import {DemoRoutingModule}   from './demo-routing-option.module';
+import {DemoComponent}    from './demo-option.component';
 
 @NgModule({
     declarations: [DemoComponent],

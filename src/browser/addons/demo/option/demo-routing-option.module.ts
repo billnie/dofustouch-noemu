@@ -1,7 +1,7 @@
 import {NgModule}            from '@angular/core';
 import {RouterModule}        from '@angular/router';
 
-import {DemoComponent}    from './demo.component';
+import {DemoComponent}    from './demo-option.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
