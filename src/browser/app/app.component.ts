@@ -1,14 +1,9 @@
-import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
-import { IpcRendererService } from '../shared/electron/ipcrenderer.service';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'application',
-    templateUrl: 'app/app.component.html',
-    styleUrls: ['app/app.component.css'],
-    host: {
-
-    }
+  selector: 'application',
+  template: `
+    <router-outlet></router-outlet>
+  `
 })
-export class AppComponent {
-
-}
+export class AppComponent {}

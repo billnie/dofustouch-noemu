@@ -3,9 +3,9 @@ import {Injectable, NgZone} from '@angular/core';
 const { ipcRenderer } = (<any>global).nodeRequire('electron');
 
 @Injectable()
-
 export class IpcRendererService {
 	ipcRenderer = ipcRenderer;
+	counter = 0;
 
 	constructor(
         private zone: NgZone

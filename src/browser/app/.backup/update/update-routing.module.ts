@@ -1,14 +1,13 @@
 import {NgModule}            from '@angular/core';
 import {RouterModule}        from '@angular/router';
 
-/* MainComponent */
-import {MainComponent} from './main.component';
+import {UpdateComponent}    from './update.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        {path: '', component: MainComponent}
+        {path: ':savePath/:remoteUrl', component: UpdateComponent}
     ])],
     exports: [RouterModule]
 })
-export class MainRoutingModule {
+export class UpdateRoutingModule {
 }

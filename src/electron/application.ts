@@ -1,24 +1,34 @@
 const settings = require('electron-settings');
-const { app } = require('electron');
+const { app, ipcMain } = require('electron');
 
 import { DefaultSettings } from './default.settings';
 import { GameWindow } from './game-window';
+import { UpdateWindow } from './update-window';
 
 export class Application {
 
-    private website: string = "http://dofustouch.no-emu.com";
-    private devMode: boolean = false;
+    public website: string = "http://dofustouch.no-emu.com";
+    public devMode: boolean = false;
     private gameWindows: GameWindow[] = [];
+    private updateWindow: UpdateWindow;
 
 
     constructor() {
         settings.defaults(DefaultSettings);
-        settings.resetToDefaultsSync();
+        settings.resetToDefaultsSync(); // debug
         this.devMode = true/*settings.getSync('option.general.developer-mode')*/;
+        this.updateWindow = new UpdateWindow(this);
     }
 
     run(): void {
+        //this.updateWindow.run();
         this.addWindow();
+
+        ipcMain.on('load-config', (event, arg) => {
+            event.returnValue = {
+                gamePath : app.getPath('userData') + '/game'
+            }
+        })
     }
 
     reloadSettings(): void {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>DofusTouch-NE</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +9,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="../../node_modules/@angular/material/core/theming/prebuilt/indigo-pink.css" rel="stylesheet">-->
     <!--<link href="../../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
-    <link rel="stylesheet" href="./lumen.css" >
+    <link rel="stylesheet" href="./lumen.css">
     <link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="styles.css">
-
 
 
     <!-- Polyfill(s) for older browsers -->
@@ -22,20 +21,29 @@
     <script src="../../node_modules/systemjs/dist/system.src.js"></script>
 
     <script>
-    global.nodeRequire = function (modulePath) {
-        return require(modulePath);
-      };
+        global.nodeRequire = function (modulePath) {
+            return require(modulePath);
+        };
     </script>
 
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+        System.import('./app/main').catch(function (err) {
+            console.error(err);
+        });
     </script>
 
 
-  </head>
-
-  <body>
-    <application>Loading...</application>
-  </body>
+</head>
+<body>
+<application>
+    <div class="showbox">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+            </svg>
+        </div>
+    </div>
+</application>
+</body>
 </html>

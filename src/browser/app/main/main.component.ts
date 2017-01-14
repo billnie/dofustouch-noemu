@@ -1,8 +1,9 @@
-import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
+import {Component, Optional, ViewEncapsulation, Inject, OnInit, NgZone} from '@angular/core';
 import {TabService} from './tab/tab.service';
 import {Tab} from './tab/tab';
 import { ShortCuts } from './../shortcuts/shortcuts';
-import { IpcRendererService } from '../../shared/electron/ipcrenderer.service';
+import { IpcRendererService } from './../../shared/electron/ipcrenderer.service';
+import {ApplicationService} from "../../shared/electron/application.service";
 
 //const { ipcRenderer } = (<any>global).nodeRequire('electron');
 
@@ -14,7 +15,7 @@ import { IpcRendererService } from '../../shared/electron/ipcrenderer.service';
         "style":"height:100%; overflow: hidden;" // find something less ugly in future
     }
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
     tabs: Tab[];
     activTab: Tab = null;
     private shortCuts: ShortCuts;
@@ -23,7 +24,8 @@ export class MainComponent {
         @Inject('Window') private window: Window,
         private tabService: TabService,
         private ipcRendererService: IpcRendererService,
-        private zone: NgZone
+        private zone: NgZone,
+        private applicationService: ApplicationService
     ) {
 
     }
@@ -108,6 +110,7 @@ export class MainComponent {
     }
 
     ngOnInit(): void {
+        console.log('hello');
         this.getTabs();
 
         this.shortCuts = new ShortCuts(this.window);

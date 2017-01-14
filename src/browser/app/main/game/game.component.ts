@@ -1,9 +1,21 @@
-import { Component, Input, Inject, NgZone, OnInit, AfterViewInit } from '@angular/core';
-import { Tab } from './../tab/tab';
-import { ShortCuts } from './../../shortcuts/shortcuts';
+import {Component, Input, Inject, NgZone, OnInit, AfterViewInit, Pipe, PipeTransform} from '@angular/core';
+import {Tab} from './../tab/tab';
+import {ShortCuts} from './../../shortcuts/shortcuts';
 import * as async from 'async';
-import { IpcRendererService } from '../../../shared/electron/ipcrenderer.service';
-import { SettingsService } from './../../../shared/settings/settings.service';
+import {IpcRendererService} from './../../../shared/electron/ipcrenderer.service';
+import {SettingsService} from './../../../shared/settings/settings.service';
+import {ApplicationService} from "./../../../shared/electron/application.service";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+
+@Pipe({name: 'safe'})
+export class SafePipe implements PipeTransform {
+    constructor(private sanitizer: DomSanitizer) {
+    }
+
+    transform(url: string) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+}
 
 @Component({
     selector: 'game',
@@ -15,24 +27,41 @@ export class GameComponent implements OnInit, AfterViewInit {
     @Input() private tab: Tab;
     private wGame: Window;
     private shortCuts: ShortCuts;
+    private gamePath: string;
+    private gameLoaded: boolean = false;
 
-    constructor(
-        @Inject('Window') private window: Window,
-        private ipcRendererService: IpcRendererService,
-        private zone: NgZone,
-        private settingsService: SettingsService
-    ) {
+    constructor(@Inject('Window') private window: Window,
+                private ipcRendererService: IpcRendererService,
+                private zone: NgZone,
+                private settingsService: SettingsService,
+                private applicationService: ApplicationService) {
+        this.gamePath = this.applicationService.gamePath + '/index.html';
+    }
+
+    ngOnInit() {
 
     }
 
-    public gameReady(): void {
-        this.setEventListener();
+    ngAfterViewInit() {
+        // after View Init get the iFrame
+        this.wGame = this.window['Frame' + this.tab.id].contentWindow;
+        this.shortCuts = new ShortCuts(this.wGame);
+    }
+
+    private gameReady(): void {
+
+        if (this.gameLoaded) {
+            this.setEventListener();
+        }
+
+        this.gameLoaded = true;
     }
 
     private setEventListener(): void {
 
         // event -> resize window game
         this.wGame.onresize = () => {
+            console.log('resize game');
             (<any>this.wGame).gui._resizeUi();
         };
 
@@ -90,25 +119,14 @@ export class GameComponent implements OnInit, AfterViewInit {
             console.log(shortcut);
             console.log(key);
             /*(<any>this.wGame).gui.menuBar._icons._childrenList.forEach((element: any, index: number) => {
-                if (element.id.toUpperCase() == key.toUpperCase()) {
-                    this.shortCuts.bind(shortcut, () => {
-                        let newIndex = index;
-                        (<any>this.wGame).gui.menuBar._icons._childrenList[newIndex].tap();
-                    });
-                    return;
-                }
-            });*/
+             if (element.id.toUpperCase() == key.toUpperCase()) {
+             this.shortCuts.bind(shortcut, () => {
+             let newIndex = index;
+             (<any>this.wGame).gui.menuBar._icons._childrenList[newIndex].tap();
+             });
+             return;
+             }
+             });*/
         });
     }
-
-    ngOnInit() {
-        console.log('component game created', this.tab.id);
-    }
-
-    ngAfterViewInit() {
-        // After View Init get the iFrame
-        this.wGame = this.window['Frame' + this.tab.id].contentWindow;
-        this.shortCuts = new ShortCuts(this.wGame);
-    }
-
 }

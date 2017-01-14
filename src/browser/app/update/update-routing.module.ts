@@ -5,7 +5,7 @@ import {UpdateComponent}    from './update.component';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        {path: '', component: UpdateComponent}
+        {path: ':savePath/:remoteUrl', component: UpdateComponent}
     ])],
     exports: [RouterModule]
 })

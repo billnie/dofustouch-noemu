@@ -1,6 +1,10 @@
 {
   "name": "angular2-electron-quickstart",
   "version": "0.0.1",
+  "dofus-touch": {
+    "appVersion": "",
+    "buildVersion": ""
+  },
   "description": "QuickStart package.json from the documentation, supplemented with testing support",
   "scripts": {
     "start": "electron build/electron/main.js",
@@ -30,17 +34,21 @@
     "@types/async": "^2.0.37",
     "@types/electron": "^1.4.30",
     "@types/keymaster": "^1.6.28",
+    "@types/request": "0.0.39",
     "async": "^2.1.4",
     "bootstrap": "^4.0.0-alpha.5",
     "core-js": "^2.4.1",
     "electron": "^1.4.13",
     "electron-localshortcut": "^1.0.0",
     "electron-settings": "^2.2.2",
+    "extract-zip": "^1.6.0",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.1.1",
     "keymaster": "^1.6.2",
     "reflect-metadata": "^0.1.3",
+    "request": "^2.79.0",
+    "request-progress": "^3.0.0",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
     "ts-helpers": "^1.1.1",

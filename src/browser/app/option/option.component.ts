@@ -1,6 +1,8 @@
 import {Component, Optional, ViewEncapsulation, Inject, Input, NgZone} from '@angular/core';
 import { ShortCuts } from './../shortcuts/shortcuts';
-import { IpcRendererService } from '../../shared/electron/ipcrenderer.service';
+import { IpcRendererService } from './../../shared/electron/ipcrenderer.service';
+import {SettingsService} from "../../shared/settings/settings.service";
+import {ApplicationService} from "../../shared/electron/application.service";
 
 
 @Component({
