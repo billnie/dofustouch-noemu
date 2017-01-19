@@ -312,6 +312,10 @@ body input {
     color: #49689C
 }
 
+#dofusBody a {
+    color: #75D8F2
+}
+
 @keyframes blinker {
     50% {
         opacity: .4
@@ -1160,7 +1164,7 @@ body input {
     left: 0;
     color: #fff;
     padding: 2px;
-    max-width: 250px;
+    max-width: 300px;
     opacity: 0
 }
 
@@ -2458,10 +2462,6 @@ body input {
 
 .ContextualMenuMonster .monstersList .willNotFightContainer {
     color: grey
-}
-
-.ContextualMenuMonster .monstersList .monsterName {
-    height: 16px
 }
 
 .ContextualMenuMonster .monstersList .monsterName.miniBoss {
@@ -4673,6 +4673,13 @@ body input {
     background-image: url("../ui/optionsButtons/btn_interactive_frame2.png")
 }
 
+.MainControls .buttonBox .progressBarPrefBtn {
+    background-image: url("../ui/icons/xpBar.png"),url("../ui/buttons/bgGray.png");
+    background-repeat: no-repeat;
+    background-position: 50% 35%,50%;
+    background-size: 60%,100%
+}
+
 .playerPoints {
     pointer-events: none;
     display: -webkit-flex
@@ -5591,6 +5598,24 @@ body input {
 
 .progressGauge.playerXp .gaugeFill {
     border-image: url("../ui/banner/gaugeFill.png") 12 fill;
+    border-style: solid;
+    border-width: 2px 0 6px 0
+}
+
+.progressGauge.guildXp .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillPurple.png") 12 fill;
+    border-style: solid;
+    border-width: 2px 0 6px 0
+}
+
+.progressGauge.mountXp .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillBlue.png") 12 fill;
+    border-style: solid;
+    border-width: 2px 0 6px 0
+}
+
+.progressGauge.jobXp .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillPink.png") 12 fill;
     border-style: solid;
     border-width: 2px 0 6px 0
 }
@@ -8023,6 +8048,10 @@ body input {
     }
 }
 
+.window.adminConsoleWindow .windowTitle {
+    font-size: 16px
+}
+
 .window.adminConsoleWindow .windowBody {
     display: -webkit-flex;
     display: flex;
@@ -10188,8 +10217,9 @@ body input {
 .window.characteristics .playerName {
     color: #B9E154;
     font-weight: bold;
-    font-size: 20px;
-    padding-top: 8px
+    font-size: 18px;
+    padding-top: 8px;
+    word-break: break-all
 }
 
 .window.characteristics .infosSup {
@@ -13892,6 +13922,10 @@ body input {
     flex: 1
 }
 
+.window .BestiaryWindow .col2 .CheckboxLabel {
+    margin-top: 10px
+}
+
 .window .BestiaryWindow .errorText,.window .BestiaryWindow .noResultText {
     text-align: center
 }
@@ -14030,6 +14064,15 @@ body input {
 .BestiaryWindow .monster .Slot.okDrop {
     border: 2px solid silver;
     border-radius: 7px
+}
+
+.BestiaryWindow .monster .Slot.special {
+    display: none;
+    background-image: url('../ui/slotSpecial.png')
+}
+
+.BestiaryWindow.showCriteriaDrop .monster .Slot.special {
+    display: inline-block
 }
 
 @keyframes blinker {
@@ -14828,10 +14871,44 @@ body input {
     min-height: 39px
 }
 
+.window .jobsWindow .col2 {
+    -webkit-flex: 1;
+    flex: 1;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column
+}
+
 .window .jobsWindow .RecipeList {
     -webkit-flex: 1;
     flex: 1;
     height: 100%
+}
+
+.window .jobsWindow .bonusPackMessage {
+    padding: 5px;
+    text-align: right
+}
+
+.window .jobsWindow .bonusPackMessage .linkToShop {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background-image: url("../ui/shop/IconPlus.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 100% 100%
+}
+
+.window .jobsWindow .bonusPackMessage .linkToShop.pressed {
+    background-image: url('../ui/shop/IconPlusPressed.png')
+}
+
+.window .jobsWindow .bonusXP {
+    color: #ff9944
 }
 
 .window .jobsWindow .job {
@@ -17915,11 +17992,13 @@ body input {
 }
 
 .window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .row {
-    margin: -2px
+    margin: -2px;
+    height: 35px
 }
 
-.window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .amountSoft .headerContent,.window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .amountHard .headerContent {
-    margin-left: 21px
+.window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .row .sortBtn {
+    right: 8px;
+    height: 30px
 }
 
 .window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .headerContent {
@@ -17943,11 +18022,13 @@ body input {
 }
 
 .window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .headerContent .currencyIcon.soft {
-    background-image: url("../ui/icons/kama.png")
+    background-image: url("../ui/icons/kama.png");
+    left: -2px
 }
 
 .window.tradeItemWindow .windowBody .BidHouseBuyerBox .tableBox .TableV2 .tableHeader .headerContent .currencyIcon.hard {
-    background-image: url("../ui/icons/goultine.png")
+    background-image: url("../ui/icons/goultine.png");
+    left: 2px
 }
 
 .window.tradeItemWindow .windowBody .BidHouseBuyerBox .setting {
@@ -18020,15 +18101,37 @@ body input {
 }
 
 .window.tradeItemWindow .windowBody .BidHouseBuyerBox .row .col .icon {
+    position: relative;
+    right: 7px;
+    top: -1px;
     width: 40px;
     height: 40px;
     background-size: 100% 100%
 }
 
-.window.tradeItemWindow .windowBody .BidHouseBuyerBox .row .col:nth-child(1) {
+.window.tradeItemWindow .windowBody .BidHouseBuyerBox .row .col .icon .quantity {
+    position: absolute;
+    left: 23px;
+    bottom: 4px;
+    padding: 0 3px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,0.5)
+}
+
+.window.tradeItemWindow .windowBody .BidHouseBuyerBox .row.expensive .col.amountSoft {
+    color: #ff5700;
+    text-shadow: 0 0 .1px black
+}
+
+.window.tradeItemWindow .windowBody .BidHouseBuyerBox .row.cheap .col.amountSoft {
+    color: #3dd83d;
+    text-shadow: 0 0 3px black
+}
+
+.window.tradeItemWindow .windowBody .BidHouseBuyerBox .row .col.icon {
     -webkit-flex: 1;
     flex: 1;
-    min-width: 52px
+    min-width: 90px
 }
 
 .window.tradeItemWindow .windowBody .buttonBox {
@@ -18206,7 +18309,8 @@ body input {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    font-size: 28px;
+    line-height: 40px;
+    font-size: 40px;
     text-shadow: 0 0 6px #000000
 }
 
@@ -18625,9 +18729,68 @@ body input {
     }
 }
 
+.window.WorldMapWindow.withoutLeftColumn .windowBody .leftColumn {
+    width: 0;
+    height: 0
+}
+
+.window.WorldMapWindow.withoutLeftColumn .windowBody .rightColumn {
+    left: 0;
+    width: 100%
+}
+
+.window.WorldMapWindow.withoutLeftColumn .buttonBox {
+    left: 10px
+}
+
 .window.WorldMapWindow .windowBody {
     padding: 0;
     overflow: hidden
+}
+
+.window.WorldMapWindow .windowBody .leftColumn {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 210px;
+    height: 100%;
+    position: absolute
+}
+
+.window.WorldMapWindow .windowBody .leftColumn .leftColumnScroll .tree {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 0;
+    padding: 0 5px;
+    box-sizing: border-box;
+    width: 100%
+}
+
+.window.WorldMapWindow .windowBody .rightColumn {
+    position: absolute;
+    left: 210px;
+    width: calc(100% - 210px);
+    height: 100%;
+    overflow: hidden
+}
+
+.window.WorldMapWindow .windowBody .rightColumn .searchBlock {
+    padding-bottom: 20px
+}
+
+.window.WorldMapWindow .conquestButton {
+    color: #412926;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 2px 10px;
+    border-style: solid;
+    border-width: 5px 5px 14px 5px;
+    border-image: url("../ui/btn_empty.png") 10 14 25 14 fill;
+    background-position: 50% 30%;
+    background-size: 33px 33px;
+    background-repeat: no-repeat
 }
 
 .window.WorldMapWindow .optionButton {
@@ -18653,10 +18816,10 @@ body input {
     height: 0%
 }
 
-.window.WorldMapWindow .buttonsSpace {
+.window.WorldMapWindow .buttonBox {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 220px;
     border-radius: 10px;
     width: 123px;
     padding: 5px;
@@ -18665,12 +18828,12 @@ body input {
     -webkit-transform: translate3d(0, 0, 0)
 }
 
-.window.WorldMapWindow .buttonsSpace.hidden {
+.window.WorldMapWindow .buttonBox.hidden {
     opacity: 0;
     pointer-events: none
 }
 
-.window.WorldMapWindow .buttonsSpace .mapBtn {
+.window.WorldMapWindow .buttonBox .mapBtn {
     width: 35px;
     height: 35px;
     background-size: 100% 100%;
@@ -18680,88 +18843,88 @@ body input {
     margin: 3px
 }
 
-.window.WorldMapWindow .buttonsSpace .grid {
+.window.WorldMapWindow .buttonBox .grid {
     background-image: url("../ui/worldmap/map_btn_grille.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .grid.selected {
+.window.WorldMapWindow .buttonBox .grid.selected {
     background-image: url("../ui/worldmap/map_btn_grille_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .centerToMyPosition {
+.window.WorldMapWindow .buttonBox .centerToMyPosition {
     background-image: url("../ui/worldmap/map_btn_centrer.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .landmarks {
+.window.WorldMapWindow .buttonBox .landmarks {
     background-image: url("../ui/worldmap/map_btn_flags.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .landmarks.selected {
+.window.WorldMapWindow .buttonBox .landmarks.selected {
     background-image: url("../ui/worldmap/map_btn_flags_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .temples {
+.window.WorldMapWindow .buttonBox .temples {
     background-image: url("../ui/worldmap/map_btn_temples.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .temples.selected {
+.window.WorldMapWindow .buttonBox .temples.selected {
     background-image: url("../ui/worldmap/map_btn_temples_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .markets {
+.window.WorldMapWindow .buttonBox .markets {
     background-image: url("../ui/worldmap/map_btn_HDV.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .markets.selected {
+.window.WorldMapWindow .buttonBox .markets.selected {
     background-image: url("../ui/worldmap/map_btn_HDV_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .workshops {
+.window.WorldMapWindow .buttonBox .workshops {
     background-image: url("../ui/worldmap/map_btn_Ateliers.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .workshops.selected {
+.window.WorldMapWindow .buttonBox .workshops.selected {
     background-image: url("../ui/worldmap/map_btn_Ateliers_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .miscellaneous {
+.window.WorldMapWindow .buttonBox .miscellaneous {
     background-image: url("../ui/worldmap/map_btn_Autres.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .miscellaneous.selected {
+.window.WorldMapWindow .buttonBox .miscellaneous.selected {
     background-image: url("../ui/worldmap/map_btn_Autres_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .dungeons {
+.window.WorldMapWindow .buttonBox .dungeons {
     background-image: url("../ui/worldmap/map_btn_Donjons.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .dungeons.selected {
+.window.WorldMapWindow .buttonBox .dungeons.selected {
     background-image: url("../ui/worldmap/map_btn_Donjons_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .conquests {
+.window.WorldMapWindow .buttonBox .conquests {
     background-image: url("../ui/worldmap/map_btn_Conquetes.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .conquests.selected {
+.window.WorldMapWindow .buttonBox .conquests.selected {
     background-image: url("../ui/worldmap/map_btn_Conquetes_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .possessions {
+.window.WorldMapWindow .buttonBox .possessions {
     background-image: url("../ui/worldmap/map_btn_possessions.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .possessions.selected {
+.window.WorldMapWindow .buttonBox .possessions.selected {
     background-image: url("../ui/worldmap/map_btn_possessions_on.png")
 }
 
-.window.WorldMapWindow .buttonsSpace .separator {
+.window.WorldMapWindow .buttonBox .separator {
     margin-left: 15px;
     display: inline-block
 }
 
-.window.WorldMapWindow .buttonsSpace .hidden {
+.window.WorldMapWindow .buttonBox .hidden {
     top: 60px
 }
 
@@ -24620,31 +24783,76 @@ body input {
     width: 100%;
     height: 100%;
     background: black;
-    opacity: .666
+    transition: opacity 300ms ease-in-out;
+    -webkit-transition: opacity 300ms ease-in-out
 }
 
 .connectionSplashScreen .splashScreenMsg {
     z-index: 301;
-    display: table;
-    position: absolute;
-    width: 100%;
-    height: 90%
+    position: relative;
+    top: 39%;
+    margin: 0 auto;
+    width: 58%;
+    height: 20%;
+    transition: opacity 300ms ease-in-out;
+    -webkit-transition: opacity 300ms ease-in-out
 }
 
 .connectionSplashScreen .splashScreenMsg .message {
-    display: table-cell;
-    vertical-align: middle;
+    position: absolute;
+    transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    top: 50%;
+    position: relative;
+    top: 43%;
     text-align: center;
     font-size: 28px;
     font-style: italic
 }
 
-.connectionSplashScreen .splashSpinner {
-    z-index: 301;
+.connectionSplashScreen .splashScreenMsg .splashSpinner {
     position: absolute;
-    top: 30px;
+    left: 0;
+    top: 24px;
     width: 100%;
     height: 100%
+}
+
+.connectionSplashScreen.blocking .lockingDiv {
+    opacity: .6
+}
+
+.connectionSplashScreen.blocking .splashScreenMsg {
+    opacity: 1
+}
+
+.connectionSplashScreen.warning {
+    pointer-events: none
+}
+
+.connectionSplashScreen.warning .lockingDiv {
+    opacity: 0
+}
+
+.connectionSplashScreen.warning .splashScreenMsg {
+    opacity: 1;
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px
+}
+
+.connectionSplashScreen.hidding {
+    pointer-events: none
+}
+
+.connectionSplashScreen.hidding .lockingDiv {
+    opacity: 0
+}
+
+.connectionSplashScreen.hidding .splashScreenMsg {
+    opacity: 0
 }
 
 @keyframes blinker {
