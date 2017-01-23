@@ -1,6 +1,6 @@
 const settings = require('electron-settings');
 const electron = require('electron');
-const { app, Menu } = electron;
+const { app, Menu, ipcMain } = electron;
 
 import { ShortCuts } from './shortcuts';
 import { GameMenuTemplate } from './game-menu.template';
@@ -19,7 +19,6 @@ export class GameWindow {
         this.win = new electron.BrowserWindow({
             width: parseInt(settings.getSync('option.general.resolution').x),
             height: parseInt(settings.getSync('option.general.resolution').y),
-            title: 'DofusTouch-NE',
             useContentSize: true,
             center: true,
             webPreferences: {
@@ -28,6 +27,19 @@ export class GameWindow {
         });
         this.shortCuts = new ShortCuts(this.win);
         this.menu = Menu.buildFromTemplate(GameMenuTemplate.build(this.application));
+    }
+
+    public reloadSettings(): void {
+        console.log('emit->reload-settings');
+        this.win.webContents.send('reload-settings');
+
+        ipcMain.once('reload-settings-done', ()=>{
+            console.log('receive->reload-settings-done');
+            this.shortCuts.reload();
+        });
+
+        this.menu = Menu.buildFromTemplate(GameMenuTemplate.build(this.application));
+        Menu.setApplicationMenu(this.menu);
     }
 
     public run(): void {

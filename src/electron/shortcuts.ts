@@ -25,7 +25,7 @@ export class ShortCuts {
     }
 
     public reload(): void{
-        console.log('reload shortcuts');
+
 
         // remove all bind
         electronLocalshortcut.unregisterAll(this.win);
@@ -34,6 +34,7 @@ export class ShortCuts {
         this.bindAll();
 
         // send IPC to the client
+        console.log('emit->reload-shortcuts');
         this.win.webContents.send('reload-shortcuts');
     }
 

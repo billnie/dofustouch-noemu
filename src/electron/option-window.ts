@@ -1,6 +1,6 @@
 const settings = require('electron-settings');
 const electron = require('electron');
-const { app, Menu } = electron;
+const { app, Menu, ipcMain } = electron;
 
 import { Application } from './application';
 
@@ -8,10 +8,24 @@ export class OptionWindow {
 
     private win: Electron.BrowserWindow;
     private application: Application;
+    private static optionWindow: OptionWindow;
 
     constructor(application: Application){
         this.application = application;
-        this.win = new electron.BrowserWindow({
+
+        ipcMain.on('validate-option', (event, arg) => {
+            //this.application.reloadSettings();
+            this.win.close();
+        });
+
+    }
+
+    static run(application: Application): void{
+        if(!this.optionWindow) {
+            this.optionWindow = new OptionWindow(application);
+        }
+
+        this.optionWindow.win = new electron.BrowserWindow({
             width: 800,
             height: 500,
             resizable: false,
@@ -19,24 +33,16 @@ export class OptionWindow {
             parent: electron.BrowserWindow.getFocusedWindow(),
             darkTheme: true,
             skipTaskbar: true,
-            show: false,
-            title: 'Option',
+            show: false
         });
 
-        this.win.on('closed', () => {
-            this.application.reloadSettings();
-            this.win = null;
+        this.optionWindow.win.on('closed', () => {
+            this.optionWindow.application.reloadSettings();
+            this.optionWindow.win = null;
         });
-    }
 
-    run(): void{
-        this.win.loadURL(`file://${__dirname}/../browser/index.html#/option`);
-        this.win.show();
+        this.optionWindow.win.loadURL(`file://${__dirname}/../browser/index.html#/option`);
+        this.optionWindow.win.show();
 
-    }
-
-    save(): void{
-        this.win.close();
-        this.application.reloadSettings();
     }
 }

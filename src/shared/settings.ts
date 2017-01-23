@@ -8,6 +8,8 @@ export interface IGeneral {
 }
 
 export interface ISettings {
+    buildVersion: string;
+    appVersion: string;
     option: {
         general: IGeneral;
         shortcuts: {
