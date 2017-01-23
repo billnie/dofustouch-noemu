@@ -1,6 +1,8 @@
-import { ISettings } from './../shared/settings';
+import {ISettings} from './../shared/settings';
 
 export const DefaultSettings: ISettings = {
+    buildVersion: null,
+    appVersion: null,
     option: {
         general: {
             hidden_shop: false,
