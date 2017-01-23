@@ -4,6 +4,7 @@ const settings = require('electron-settings');
 import { ShortCuts } from './shortcuts';
 import { Application } from './application';
 import { OptionWindow } from './option-window';
+import {ChangeLogWindow} from "./changelog-window";
 
 export class GameMenuTemplate {
 
@@ -166,7 +167,13 @@ export class GameMenuTemplate {
                     {
                         label: 'Options',
                         click (item: Electron.MenuItem, focusedWindow: Electron.BrowserWindow) {
-                            new OptionWindow(application).run();
+                            OptionWindow.run(application);
+                        }
+                    },
+                    {
+                        label: 'Changelog',
+                        click (item: Electron.MenuItem, focusedWindow: Electron.BrowserWindow) {
+                            ChangeLogWindow.run(application);
                         }
                     }
                 ]
