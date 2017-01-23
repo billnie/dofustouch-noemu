@@ -1,16 +1,39 @@
-import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ISettings, IGeneral } from './../../../shared/settings'
+import {Injectable, NgZone} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {ISettings, IGeneral} from './../../../shared/settings'
+import {IpcRendererService} from "../electron/ipcrenderer.service";
 
 const settings = (<any>global).nodeRequire('electron-settings');
 
 export class Option {
+    private _buildVersion: string;
+    private _appVersion: string;
     public general: Option.General;
     public shortcuts: Option.Shortcuts;
+
+    get buildVersion(): string {
+        return this._buildVersion;
+    }
+
+    set buildVersion(buildVersion: string) {
+        settings.setSync('option.buildVersion', buildVersion);
+        this._buildVersion = buildVersion;
+    }
+
+    get appVersion(): string {
+        return this._appVersion;
+    }
+
+    set appVersion(appVersion: string) {
+        settings.setSync('option.appVersion', appVersion);
+        this._appVersion = appVersion;
+    }
 
     constructor() {
         this.general = new Option.General();
         this.shortcuts = new Option.Shortcuts();
+        this._appVersion = settings.getSync('option.appVersion');
+        this._buildVersion = settings.getSync('option.buildVersion');
     }
 }
 
@@ -31,9 +54,10 @@ export module Option {
             this._item = settings.getSync('option.shortcuts.item');
         }
 
+
         get spell(): Array<string> {
             return new Proxy(this._spell, {
-                get: function(target, name) {
+                get: function (target, name) {
                     return target[name];
                 },
                 set(target, prop: string, value) {
@@ -51,7 +75,7 @@ export module Option {
 
         get item(): Array<string> {
             return new Proxy(this._item, {
-                get: function(target, name) {
+                get: function (target, name) {
                     return target[name];
                 },
                 set(target, prop: string, value) {
@@ -93,130 +117,207 @@ export module Option {
             private _shop: string;
             private _goultine: string;
 
-            get carac(): string { return this._carac; }
+            get carac(): string {
+                return this._carac;
+            }
+
             set carac(carac: string) {
                 settings.setSync('option.shortcuts.interface.carac', carac);
                 this._carac = carac;
             }
 
-            get spell(): string { return this._spell; }
+            get spell(): string {
+                return this._spell;
+            }
+
             set spell(spell: string) {
                 settings.setSync('option.shortcuts.interface.spell', spell);
                 this._spell = spell;
             }
 
-            get bag(): string { return this._bag; }
+            get bag(): string {
+                return this._bag;
+            }
+
             set bag(bag: string) {
                 settings.setSync('option.shortcuts.interface.bag', bag);
                 this._bag = bag;
             }
 
-            get bidhouse(): string { return this._bidhouse; }
+            get bidhouse(): string {
+                return this._bidhouse;
+            }
+
             set bidhouse(bidhouse: string) {
                 settings.setSync('option.shortcuts.interface.bidhouse', bidhouse);
                 this._bidhouse = bidhouse;
             }
 
-            get map(): string { return this._map; }
+            get map(): string {
+                return this._map;
+            }
+
             set map(map: string) {
                 settings.setSync('option.shortcuts.interface.map', map);
                 this._map = map;
             }
 
-            get friend(): string { return this._friend; }
+            get friend(): string {
+                return this._friend;
+            }
+
             set friend(friend: string) {
                 settings.setSync('option.shortcuts.interface.friend', friend);
                 this._friend = friend;
             }
 
-            get book(): string { return this._book; }
+            get book(): string {
+                return this._book;
+            }
+
             set book(book: string) {
                 settings.setSync('option.shortcuts.interface.book', book);
                 this._book = book;
             }
 
-            get guild(): string { return this._guild; }
+            get guild(): string {
+                return this._guild;
+            }
+
             set guild(guild: string) {
                 settings.setSync('option.shortcuts.interface.guild', guild);
                 this._guild = guild;
             }
 
-            get conquest(): string { return this._conquest; }
+            get conquest(): string {
+                return this._conquest;
+            }
+
             set conquest(conquest: string) {
                 settings.setSync('option.shortcuts.interface.guild', conquest);
                 this._conquest = conquest;
             }
 
-            get job(): string { return this._job; }
+            get job(): string {
+                return this._job;
+            }
+
             set job(job: string) {
                 settings.setSync('option.shortcuts.interface.job', job);
                 this._job = job;
             }
 
-            get alliance(): string { return this._alliance; }
+            get alliance(): string {
+                return this._alliance;
+            }
+
             set alliance(alliance: string) {
                 settings.setSync('option.shortcuts.interface.alliance', alliance);
                 this._alliance = alliance;
             }
 
-            get mount(): string { return this._mount; }
+            get mount(): string {
+                return this._mount;
+            }
+
             set mount(mount: string) {
                 settings.setSync('option.shortcuts.interface.guild', mount);
                 this._mount = mount;
             }
 
-            get directory(): string { return this._directory; }
+            get directory(): string {
+                return this._directory;
+            }
+
             set directory(directory: string) {
                 settings.setSync('option.shortcuts.interface.directory', directory);
                 this._directory = directory;
             }
 
-            get alignement(): string { return this._alignement; }
+            get alignement(): string {
+                return this._alignement;
+            }
+
             set alignement(alignement: string) {
                 settings.setSync('option.shortcuts.interface.alignement', alignement);
                 this._alignement = alignement;
             }
 
-            get bestiary(): string { return this._bestiary; }
+            get bestiary(): string {
+                return this._bestiary;
+            }
+
             set bestiary(bestiary: string) {
                 settings.setSync('option.shortcuts.interface.bestiary', bestiary);
                 this._bestiary = bestiary;
             }
 
-            get title(): string { return this._title; }
+            get title(): string {
+                return this._title;
+            }
+
             set title(title: string) {
                 settings.setSync('option.shortcuts.interface.title', title);
                 this._title = title;
             }
 
-            get achievement(): string { return this._achievement; }
+            get achievement(): string {
+                return this._achievement;
+            }
+
             set achievement(achievement: string) {
                 settings.setSync('option.shortcuts.interface.achievement', achievement);
                 this._achievement = achievement;
             }
 
-            get almanax(): string { return this._almanax; }
+            get almanax(): string {
+                return this._almanax;
+            }
+
             set almanax(almanax: string) {
                 settings.setSync('option.shortcuts.interface.almanax', almanax);
                 this._almanax = almanax;
             }
 
-            get spouse(): string { return this._spouse; }
+            get spouse(): string {
+                return this._spouse;
+            }
+
             set spouse(spouse: string) {
                 settings.setSync('option.shortcuts.interface.spouse', spouse);
                 this._spouse = spouse;
             }
 
-            get shop(): string { return this._shop; }
+            get shop(): string {
+                return this._shop;
+            }
+
             set shop(shop: string) {
                 settings.setSync('option.shortcuts.interface.shop', shop);
                 this._shop = shop;
             }
 
-            get goultine(): string { return this._goultine; }
+            get goultine(): string {
+                return this._goultine;
+            }
+
             set goultine(goultine: string) {
                 settings.setSync('option.shortcuts.interface.goultine', goultine);
                 this._goultine = goultine;
+            }
+
+            public getAll(): Array<any> {
+                let tab: Array<any> = [];
+
+                for(let prop in this) {
+                    let newProp = prop.replace('_', '');
+                    tab.push({
+                        key: newProp,
+                        value: this[prop]
+                    });
+                }
+
+                return tab;
             }
 
             constructor() {
@@ -299,7 +400,7 @@ export module Option {
 
             get tabs(): Array<string> {
                 return new Proxy(this._tabs, {
-                    get: function(target, name) {
+                    get: function (target, name) {
                         return target[name];
                     },
                     set(target, prop: string, value) {
@@ -394,8 +495,18 @@ export class SettingsService {
 
     public option: Option;
 
-    constructor() {
+    constructor(private ipcRendererService: IpcRendererService) {
         this.option = new Option();
+
+
+        this.ipcRendererService.on('reload-settings', () => {
+            console.log('receive->reload-settings');
+            this.option = new Option(); // synchronous call
+
+            console.log('emit->reload-settings-done');
+            this.ipcRendererService.send('reload-settings-done');
+        });
+
     }
 
 }

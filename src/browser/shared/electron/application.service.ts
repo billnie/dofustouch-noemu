@@ -4,20 +4,24 @@ import {IpcRendererService} from "./ipcrenderer.service";
 @Injectable()
 export class ApplicationService {
 
-    public gamePath: string = "aaa";
+    public gamePath: string = "";
+    public buildVersion: string;
+    public appVersion: string;
+    public appPath: string;
 
     constructor(
         private ipcRendererService: IpcRendererService
     ){
-        console.log('ApplicationService construct')
     }
 
     public load(): void {
-        console.log('init app service');
+        console.log('init application service');
 
         let config = this.ipcRendererService.sendSync('load-config');
         this.gamePath = config.gamePath;
-        console.log(this.gamePath);
+        this.buildVersion = config.buildVersion;
+        this.appVersion = config.appVersion;
+        this.appPath = config.appPath;
     }
 
 }
