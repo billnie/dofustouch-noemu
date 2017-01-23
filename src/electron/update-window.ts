@@ -1,5 +1,6 @@
+import request = require("request");
 const settings = require('electron-settings');
-const extract = require('extract-zip')
+const extract = require('extract-zip');
 
 import electron = require("electron");
 import {ipcMain, app, Menu} from 'electron';
@@ -11,7 +12,7 @@ import {Application} from './application';
 
 export class UpdateWindow {
 
-    private win: Electron.BrowserWindow;
+    public win: Electron.BrowserWindow;
     private application: Application;
     private savePath: string;
     private remoteUrl: string;
@@ -20,13 +21,8 @@ export class UpdateWindow {
         this.application = application;
     }
 
-    run(): void {
-
-        /*this.checkGameUpdate().then((available) => {
-
-         });*/
-
-        this.win = new electron.BrowserWindow({
+    createWindow(): Electron.BrowserWindow {
+        let window = new electron.BrowserWindow({
             width: 800,
             height: 150,
             resizable: false,
@@ -34,58 +30,78 @@ export class UpdateWindow {
             parent: electron.BrowserWindow.getFocusedWindow(),
             darkTheme: true,
             skipTaskbar: true,
-            show: false,
-            title: 'Updater',
+            show: true
         });
 
-        this.win.on('closed', () => {
-            this.win = null;
+        window.on('closed', () => {
+            window = null;
         });
 
-        this.win.show();
+        return window;
 
-        this.savePath = app.getPath('userData') + '/game.zip';
-        this.remoteUrl = 'http://dofustouch.no-emu.com/test/game.zip';
-
-        this.win.loadURL(`file://${__dirname}/../browser/index.html#/update/${encodeURIComponent(this.savePath)}/${encodeURIComponent(this.remoteUrl)}`);
-
-        ipcMain.on('install-update', (event, arg) => {
-            console.log('ready to update');
-            extract(this.savePath, {dir: app.getPath('userData') + '/'}, function (err: any) {
-                console.log(err);
-            })
-        });
     }
 
-    private checkGameUpdate(): Promise<boolean> {
+    public run(): Promise<any> {
         return new Promise((resolve, reject) => {
-            let queries = '?version=' + app.getVersion() + '&os=' + process.platform;
-            http.get(url.resolve(this.application.website, 'update/update.php' + queries), (res) => {
+            this.checkGameUpdate().then((response) => {
 
-                // if website not available
-                if (!res || !res.statusCode || res.statusCode != 200) {
-
+                if (!response.available) {
+                    return resolve();
                 } else {
-                    let body: string = '';
-
-                    // get data
-                    res.on('data', (chunk: string) => {
-                        body += chunk;
+                    this.win = new electron.BrowserWindow({
+                        width: 800,
+                        height: 150,
+                        resizable: false,
+                        center: true,
+                        parent: electron.BrowserWindow.getFocusedWindow(),
+                        darkTheme: true,
+                        skipTaskbar: true,
+                        show: true,
+                        title: 'Updater',
                     });
 
-                    // parse data
-                    res.on('end', () => {
-                        let responseBody: any = JSON.parse(body);
+                    this.win.on('closed', () => {
+                        this.win = null;
+                    });
 
 
-                    })
+                    this.savePath = app.getPath('userData') + '/game.zip';
+                    this.remoteUrl = response.file;//'http://dofustouch.no-emu.com/test/game.zip';
+
+                    this.win.loadURL(`file://${__dirname}/../browser/index.html#/update/${encodeURIComponent(this.savePath)}/${encodeURIComponent(this.remoteUrl)}`);
+
+                    ipcMain.on('install-update', (event, arg) => {
+                        console.log('ready to update');
+                        extract(this.savePath, {dir: app.getPath('userData') + '/'}, function (err: any) {
+                            resolve();
+                        })
+                    });
                 }
             });
         });
     }
 
-    private checkNoEmuUpdate() {
+    private checkGameUpdate(): Promise<any> {
+        return new Promise((resolve, reject) => {
 
+            let queries = '?version=' + settings.getSync('option.buildVersion') + '&os=' + process.platform;
+            request(url.resolve(this.application.website, 'update/game.php' + queries), (error, response, body) => {
+
+                if (!error && response.statusCode == 200) {
+                    let parseBody: any = JSON.parse(body);
+
+                    if(settings.getSync('option.buildVersion') == parseBody.version){
+                        parseBody.available = false;
+                    }else{
+                        parseBody.available = true;
+                    }
+
+                    resolve(parseBody);
+                } else {
+                    reject(error);
+                }
+            });
+        });
     }
 
 }
