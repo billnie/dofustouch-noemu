@@ -27,6 +27,7 @@
       '@angular/flex-layout': 'npm:@angular/flex-layout/bundles/flex-layout.umd.js',
       '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
       'async': 'npm:async/dist/async.js',
+      'marked': 'npm:marked/lib/marked.js',
 
       // other libraries
       'rxjs':                       'npm:rxjs',
