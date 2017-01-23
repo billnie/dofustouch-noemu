@@ -7,6 +7,8 @@ const browserSync = require('browser-sync');
 const tslint = require('gulp-tslint');
 const reload = browserSync.reload;
 
+var tsProject = typescript.createProject('tsconfig.json');
+
 const paths = {
     dist: 'build',
     distFiles: 'build/**/*',
@@ -30,12 +32,16 @@ gulp.task('copy:assets', ['clean'], function() {
 gulp.task('compile', ['clean'], function() {
     // load the tsconfig each time as it changes!
     const tscConfig = JSON.parse(fs.readFileSync('./tsconfig.json', 'UTF8'));
-    return gulp
+    /*return gulp
         .src(paths.srcTsFiles)
         .pipe(sourcemaps.init())
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(paths.dist));
+        .pipe(gulp.dest(paths.dist));*/
+    return tsProject.src()
+        .pipe(tsProject())
+        .js.pipe(gulp.dest(paths.dist));
+
 });
 
 // linting
