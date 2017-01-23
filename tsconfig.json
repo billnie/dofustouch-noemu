@@ -15,10 +15,10 @@
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
         "typeRoots": [
-            "node_modules/@types"
+            "node_modules/@types",
+            "typings/notification.d.ts"
         ],
         "types": [
-
             "node",
             "hammerjs",
             "keymaster",
@@ -28,8 +28,7 @@
         ]
     },
     "exclude": [
-        "node_modules",
-        "typings"
+        "node_modules"
     ],
     "atom": {
         "rewriteTsconfig": false
