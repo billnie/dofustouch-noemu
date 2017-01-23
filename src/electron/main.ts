@@ -1,9 +1,8 @@
-const electron = require('electron');
+const commandLineArgs = require('command-line-args');
+import {app} from 'electron';
 
 import {Application} from './application';
 
-// Define App
-const app = electron.app;
 
 // Ignore black list GPU for WebGL
 app.commandLine.appendSwitch('ignore-gpu-blacklist', 'true');
@@ -11,13 +10,24 @@ app.commandLine.appendSwitch('ignore-gpu-blacklist', 'true');
 // Disable backgrounding renderer
 app.commandLine.appendSwitch("disable-renderer-backgrounding");
 
+// Command Line Argument
+const optionDefinitions = [
+    { name: 'update', alias: 'u', type: Boolean },
+    { name: 'changelog', alias: 'l', type: Boolean },
+    { name: 'relaunch', alias: 'r', type: Boolean },
+    { name: 'remote-debugging-port', type: Boolean },
+    { name: 'expose_debug_as', type: String},
+    { name: 'devmode', type: Boolean}
+];
+const cmdOptions = commandLineArgs(optionDefinitions);
+
 let application: Application = null;
 
 app.on('ready', () => {
 
     // Singleton
     if(!application){
-        application = new Application();
+        application = new Application(cmdOptions);
     }
 
     application.run();
