@@ -3,16 +3,17 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {SharedModule} from './../../shared/shared.module';
 
-import {UpdateRoutingModule}   from './update-routing.module';
-import {UpdateComponent}    from './update.component';
+import {ChangeLogRoutingModule}   from './changelog-routing.module';
+import {ChangeLogComponent}    from './changelog.component';
+
 
 @NgModule({
-    declarations: [UpdateComponent],
+    declarations: [ChangeLogComponent],
     imports: [
         SharedModule,
-        UpdateRoutingModule,
+        ChangeLogRoutingModule,
         NgbModule.forRoot()
     ],
 })
-export class UpdateModule {
+export class ChangeLogModule {
 }

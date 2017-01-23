@@ -12,7 +12,7 @@
     </li>
 </ul>
 
-<game *ngFor="let tab of tabs" [tab]="tab" [hidden]="!tab.isFocus"></game>
+<game *ngFor="let tab of tabs" (selectTab)="selectTab(tab)" [tab]="tab" [hidden]="!tab.isFocus"></game>
 
 
 <!-- <md-sidenav-layout fullscreen>

@@ -1,7 +1,8 @@
 import {Component, OnInit, NgZone}      from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {IpcRendererService} from "../../../shared/electron/ipcrenderer.service";
+import {IpcRendererService} from "./../../shared/electron/ipcrenderer.service";
+import {Title} from "@angular/platform-browser";
 
 
 const progress = (<any>global).nodeRequire('request-progress');
@@ -26,7 +27,10 @@ export class UpdateComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private zone: NgZone,
-                private ipcRendererService: IpcRendererService) {
+                private ipcRendererService: IpcRendererService,
+                private titleService: Title
+    ) {
+        this.titleService.setTitle('Mise à jours');
     }
 
     download() {

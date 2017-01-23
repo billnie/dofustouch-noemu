@@ -3,6 +3,7 @@ import { ShortCuts } from './../shortcuts/shortcuts';
 import { IpcRendererService } from './../../shared/electron/ipcrenderer.service';
 import {SettingsService} from "../../shared/settings/settings.service";
 import {ApplicationService} from "../../shared/electron/application.service";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -15,4 +16,14 @@ import {ApplicationService} from "../../shared/electron/application.service";
 })
 export class OptionComponent {
 
+    constructor(
+        private ipcRendererService: IpcRendererService,
+        private titleService: Title
+    ){
+        this.titleService.setTitle('Option');
+    }
+
+    private validate(){
+        this.ipcRendererService.send('validate-option');
+    }
 }

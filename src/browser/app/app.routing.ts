@@ -10,6 +10,10 @@ const routes: Routes = [
         loadChildren: './app/option/option.module#OptionModule'
     },
     {
+        path: 'changelog',
+        loadChildren: './app/changelog/changelog.module#ChangeLogModule'
+    },
+    {
         path: 'update',
         loadChildren: './app/update/update.module#UpdateModule'
     },

@@ -3,6 +3,7 @@ export class Tab {
   character: string;
   isLogged: boolean;
   isFocus: boolean;
+  window: Window;
   static seqId: number = 1;
 
   public constructor(){
@@ -10,5 +11,6 @@ export class Tab {
       this.character = "non connecté";
       this.isLogged = false;
       this.isFocus = false;
+      this.window = null;
   }
 }

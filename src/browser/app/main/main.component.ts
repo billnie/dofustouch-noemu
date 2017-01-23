@@ -1,9 +1,11 @@
-import {Component, Optional, ViewEncapsulation, Inject, OnInit, NgZone} from '@angular/core';
+import {Component, Optional, ViewEncapsulation, Inject, OnInit, NgZone, SimpleChanges, ViewChild} from '@angular/core';
 import {TabService} from './tab/tab.service';
 import {Tab} from './tab/tab';
 import { ShortCuts } from './../shortcuts/shortcuts';
 import { IpcRendererService } from './../../shared/electron/ipcrenderer.service';
 import {ApplicationService} from "../../shared/electron/application.service";
+import {SettingsService} from "../../shared/settings/settings.service";
+import {Title} from "@angular/platform-browser";
 
 //const { ipcRenderer } = (<any>global).nodeRequire('electron');
 
@@ -24,10 +26,17 @@ export class MainComponent implements OnInit {
         @Inject('Window') private window: Window,
         private tabService: TabService,
         private ipcRendererService: IpcRendererService,
-        private zone: NgZone,
-        private applicationService: ApplicationService
+        private settingsService: SettingsService,
+        private applicationService: ApplicationService,
+        private titleService: Title
     ) {
+        (<any>this.window).appVersion = this.applicationService.appVersion;
+        (<any>this.window).buildVersion = this.applicationService.buildVersion;
 
+        console.log(this.settingsService.option.appVersion);
+        console.log(this.settingsService.option.buildVersion);
+
+        this.titleService.setTitle('DofusTouch No-Emu');
     }
 
     getTabs(): void {
@@ -100,14 +109,28 @@ export class MainComponent implements OnInit {
     }
 
     selectTab(tab: Tab): void {
+
+        // remove old activTab
         if (this.activTab !== null) {
             this.activTab.isFocus = false;
         }
 
-        tab.isFocus = true;
+        // set the new one
         this.activTab = tab;
-        console.log(tab);
+        this.activTab.isFocus = true;
+
+        //focus the iframe
+        if(this.activTab.isLogged){
+            this.activTab.window.focus();
+        }
+
+        // change the name of the windows
+        if(this.activTab.isLogged){
+            this.titleService.setTitle(this.activTab.character);
+        }
+
     }
+
 
     ngOnInit(): void {
         console.log('hello');

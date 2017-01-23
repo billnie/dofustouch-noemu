@@ -1,11 +1,16 @@
-import {Component, Input, Inject, NgZone, OnInit, AfterViewInit, Pipe, PipeTransform} from '@angular/core';
+import {
+    Component, Input, Inject, NgZone, OnInit, AfterViewInit, Pipe, PipeTransform, Output,
+    EventEmitter
+} from '@angular/core';
 import {Tab} from './../tab/tab';
 import {ShortCuts} from './../../shortcuts/shortcuts';
 import * as async from 'async';
 import {IpcRendererService} from './../../../shared/electron/ipcrenderer.service';
 import {SettingsService} from './../../../shared/settings/settings.service';
 import {ApplicationService} from "./../../../shared/electron/application.service";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {DomSanitizer, SafeUrl, Title} from "@angular/platform-browser";
+
+const {remote} = (<any>global).nodeRequire('electron');
 
 @Pipe({name: 'safe'})
 export class SafePipe implements PipeTransform {
@@ -25,7 +30,7 @@ export class SafePipe implements PipeTransform {
 export class GameComponent implements OnInit, AfterViewInit {
 
     @Input() private tab: Tab;
-    private wGame: Window;
+    @Output() selectTab = new EventEmitter();
     private shortCuts: ShortCuts;
     private gamePath: string;
     private gameLoaded: boolean = false;
@@ -34,7 +39,8 @@ export class GameComponent implements OnInit, AfterViewInit {
                 private ipcRendererService: IpcRendererService,
                 private zone: NgZone,
                 private settingsService: SettingsService,
-                private applicationService: ApplicationService) {
+                private applicationService: ApplicationService,
+                private titleService: Title) {
         this.gamePath = this.applicationService.gamePath + '/index.html';
     }
 
@@ -44,8 +50,9 @@ export class GameComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         // after View Init get the iFrame
-        this.wGame = this.window['Frame' + this.tab.id].contentWindow;
-        this.shortCuts = new ShortCuts(this.wGame);
+        this.tab.window  = this.window['Frame' + this.tab.id].contentWindow;
+
+        this.shortCuts = new ShortCuts(this.tab.window );
     }
 
     private gameReady(): void {
@@ -60,20 +67,24 @@ export class GameComponent implements OnInit, AfterViewInit {
     private setEventListener(): void {
 
         // event -> resize window game
-        this.wGame.onresize = () => {
+        this.tab.window .onresize = () => {
             console.log('resize game');
-            (<any>this.wGame).gui._resizeUi();
+            (<any>this.tab.window).gui._resizeUi();
         };
 
 
         // event -> log into the world
-        (<any>this.wGame).gui.playerData.on("characterSelectedSuccess", () => {
+        (<any>this.tab.window ).gui.playerData.on("characterSelectedSuccess", () => {
 
             // retrieve character name and update zone.js
             this.zone.run(() => {
-                this.tab.character = (<any>this.wGame).gui.playerData.characterBaseInformations.name;
+                this.tab.character = (<any>this.tab.window).gui.playerData.characterBaseInformations.name;
                 this.tab.isLogged = true;
+                this.titleService.setTitle(this.tab.character);
             });
+
+            // bind event IG
+            this.bindEventIG();
 
             // bind shortcut
             this.bindShortcuts();
@@ -83,7 +94,7 @@ export class GameComponent implements OnInit, AfterViewInit {
         this.ipcRendererService.on('reload-shortcuts', (event: any, arg: any) => {
 
             if (this.tab.isLogged) {
-                console.log('reload-shortcuts');
+                console.log('receive->reload-shortcuts');
                 // unbind all registered shortcuts
                 this.shortCuts.unBindAll();
 
@@ -93,40 +104,60 @@ export class GameComponent implements OnInit, AfterViewInit {
         });
     }
 
+    private bindEventIG(): void {
+        (<any>this.tab.window ).dofus.connectionManager.on('ChatServerMessage', (msg: any) => {
+            console.log(msg);
+
+            if (!this.tab.window.document.hasFocus()) {
+                if (msg.channel == 9) {
+                    let constNotif = new Notification('Message de : ' + msg.senderName, {
+                        body: msg.content
+                    });
+
+                    constNotif.onclick = () => {
+                        remote.getCurrentWindow().focus();
+                        this.zone.run(() => {
+                            this.selectTab.emit(this.tab);
+                        });
+                    };
+                }
+            }
+        });
+
+    }
+
     private bindShortcuts(): void {
 
         // end turn
         this.shortCuts.bind(this.settingsService.option.shortcuts.diver.end_turn, () => {
-            (<any>this.wGame).gui.fightManager.finishTurn()
+            (<any>this.tab.window).gui.fightManager.finishTurn()
         });
 
         // spell
         async.forEachOf(this.settingsService.option.shortcuts.spell, (shortcut: string, index: number) => {
             this.shortCuts.bind(shortcut, () => {
-                (<any>this.wGame).gui.shortcutBar.panels.spell.slotList[index].tap();
+                (<any>this.tab.window).gui.shortcutBar.panels.spell.slotList[index].tap();
             });
         });
 
         // item
         async.forEachOf(this.settingsService.option.shortcuts.item, (shortcut: string, index: number) => {
             this.shortCuts.bind(shortcut, () => {
-                (<any>this.wGame).gui.shortcutBar.panels.item.slotList[index].tap();
+                (<any>this.tab.window).gui.shortcutBar.panels.item.slotList[index].tap();
             });
         });
 
         // interfaces
-        async.forEachOf((<any>this.settingsService.option.shortcuts).interface, (shortcut: string, key: string) => {
-            console.log(shortcut);
-            console.log(key);
-            /*(<any>this.wGame).gui.menuBar._icons._childrenList.forEach((element: any, index: number) => {
-             if (element.id.toUpperCase() == key.toUpperCase()) {
-             this.shortCuts.bind(shortcut, () => {
-             let newIndex = index;
-             (<any>this.wGame).gui.menuBar._icons._childrenList[newIndex].tap();
-             });
-             return;
-             }
-             });*/
+        async.forEachOf(this.settingsService.option.shortcuts.interface.getAll(), (inter: any) => {
+            (<any>this.tab.window).gui.menuBar._icons._childrenList.forEach((element: any, index: number) => {
+                if (element.id.toUpperCase() == inter.key.toUpperCase()) {
+                    this.shortCuts.bind(inter.value, () => {
+                        let newIndex = index;
+                        (<any>this.tab.window).gui.menuBar._icons._childrenList[newIndex].tap();
+                    });
+                    return;
+                }
+            });
         });
     }
 }

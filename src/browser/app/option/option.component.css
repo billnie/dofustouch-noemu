@@ -20,6 +20,12 @@
     padding-top: 5px;
 }
 
+#validate{
+    position:absolute;
+    top:5px;
+    right:5px;
+}
+
 
 /*!
  * bootstrap-vertical-tabs - v1.2.1
