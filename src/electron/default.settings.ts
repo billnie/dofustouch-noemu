@@ -7,6 +7,7 @@ export const DefaultSettings: ISettings = {
         general: {
             hidden_shop: false,
             developper_mode: false,
+            stay_connected: true,
             resolution: {
                 x: 1280,
                 y: 720
@@ -16,8 +17,8 @@ export const DefaultSettings: ISettings = {
             no_emu: {
                 new_tab: "ctrl+t",
                 new_window: "ctrl+n",
-                next_tab: "alt+right",
-                prev_tab: "alt+left",
+                next_tab: "right",
+                prev_tab: "left",
                 activ_tab: "",
                 tabs: [
                     "f1",
@@ -36,6 +37,7 @@ export const DefaultSettings: ISettings = {
                 end_turn: "backspace"
             },
             spell: [
+                "",
                 "1",
                 "2",
                 "3",
@@ -46,7 +48,6 @@ export const DefaultSettings: ISettings = {
                 "8",
                 "9",
                 "0",
-                "",
                 "",
                 "",
                 "",
@@ -122,6 +123,10 @@ export const DefaultSettings: ISettings = {
                 shop: "v",
                 goultine: "r"
             }
+        },
+        notification:{
+            private_message: true,
+            fight_turn: true
         }
     }
 };

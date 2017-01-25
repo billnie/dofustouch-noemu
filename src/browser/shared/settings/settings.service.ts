@@ -10,6 +10,7 @@ export class Option {
     private _appVersion: string;
     public general: Option.General;
     public shortcuts: Option.Shortcuts;
+    public notification: Option.Notification;
 
     get buildVersion(): string {
         return this._buildVersion;
@@ -32,6 +33,8 @@ export class Option {
     constructor() {
         this.general = new Option.General();
         this.shortcuts = new Option.Shortcuts();
+        this.notification = new Option.Notification();
+
         this._appVersion = settings.getSync('option.appVersion');
         this._buildVersion = settings.getSync('option.buildVersion');
     }
@@ -57,10 +60,10 @@ export module Option {
 
         get spell(): Array<string> {
             return new Proxy(this._spell, {
-                get: function (target, name) {
+                get: function (target: any, name: any) {
                     return target[name];
                 },
-                set(target, prop: string, value) {
+                set(target: any, prop: string, value: any) {
                     target[prop] = value;
                     settings.setSync('option.shortcuts.spell', target);
                     return true;
@@ -309,7 +312,7 @@ export module Option {
             public getAll(): Array<any> {
                 let tab: Array<any> = [];
 
-                for(let prop in this) {
+                for (let prop in this) {
                     let newProp = prop.replace('_', '');
                     tab.push({
                         key: newProp,
@@ -400,10 +403,10 @@ export module Option {
 
             get tabs(): Array<string> {
                 return new Proxy(this._tabs, {
-                    get: function (target, name) {
+                    get: function (target:any, name:any) {
                         return target[name];
                     },
-                    set(target, prop: string, value) {
+                    set(target:any, prop: string, value:any) {
                         target[prop] = value;
                         settings.setSync('option.shortcuts.no_emu.tabs', target);
                         return true;
@@ -487,6 +490,34 @@ export module Option {
             this.resolution = settings.getSync('option.general.resolution');
         }
     }
+
+    export class Notification {
+        private _private_message: boolean;
+        private _fight_turn: boolean;
+
+        get private_message() {
+            return this._private_message;
+        }
+
+        set private_message(private_message: any) {
+            settings.setSync('option.notification.private_message', private_message);
+            this._private_message = private_message;
+        }
+
+        get fight_turn() {
+            return this._fight_turn;
+        }
+
+        set fight_turn(fight_turn: any) {
+            settings.setSync('option.notification.fight_turn', fight_turn);
+            this._fight_turn = fight_turn;
+        }
+
+        constructor() {
+            this.fight_turn = settings.getSync('option.notification.fight_turn');
+            this.private_message = settings.getSync('option.notification.private_message');
+        }
+    }
 }
 
 
@@ -495,16 +526,35 @@ export class SettingsService {
 
     public option: Option;
 
-    constructor(private ipcRendererService: IpcRendererService) {
+    constructor(private ipcRendererService: IpcRendererService,
+                private zone: NgZone) {
         this.option = new Option();
 
 
         this.ipcRendererService.on('reload-settings', () => {
             console.log('receive->reload-settings');
-            this.option = new Option(); // synchronous call
+
+            //this.option = nullx;
+            let resetOption = new Option(); // synchronous call
+
+
+            this.option.shortcuts.no_emu = resetOption.shortcuts.no_emu;
+
+            this.option.appVersion = resetOption.appVersion;
+            this.option.buildVersion = resetOption.buildVersion;
+            this.option.general = resetOption.general;
+
+            this.option.notification = resetOption.notification;
+            this.option.shortcuts.diver = resetOption.shortcuts.diver;
+            this.option.shortcuts.interface = resetOption.shortcuts.interface;
+            this.option.shortcuts.spell = resetOption.shortcuts.spell;
+            this.option.shortcuts.item = resetOption.shortcuts.item;
 
             console.log('emit->reload-settings-done');
+
             this.ipcRendererService.send('reload-settings-done');
+
+
         });
 
     }

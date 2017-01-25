@@ -1,15 +1,15 @@
 <div class="container">
     <div class="form-horizontal">
         <div class="form-group">
-            <label for="resolution" class="col-xs-3 control-label">Résolution de la fenêtre</label>
-            <div class="col-xs-6">
+            <label for="resolution" class="col-3 control-label">Résolution de la fenêtre</label>
+            <div class="col-6">
                 <select id="resolution" class="form-control" [(ngModel)]="_resolution" (change)="setResolution($event.target.value)">
                     <option *ngFor="let r of resolutions" [value]="r.value">{{r.name}}</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-10">
+            <div class="col-offset-3 col-10">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" class="shortcut"
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-10">
+            <div class="col-offset-3 col-10">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" class="shortcut"

@@ -50,9 +50,9 @@ export class GameComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         // after View Init get the iFrame
-        this.tab.window  = this.window['Frame' + this.tab.id].contentWindow;
+        this.tab.window = this.window['Frame' + this.tab.id].contentWindow;
 
-        this.shortCuts = new ShortCuts(this.tab.window );
+        this.shortCuts = new ShortCuts(this.tab.window);
     }
 
     private gameReady(): void {
@@ -67,7 +67,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     private setEventListener(): void {
 
         // event -> resize window game
-        this.tab.window .onresize = () => {
+        this.tab.window.onresize = () => {
             console.log('resize game');
             (<any>this.tab.window).gui._resizeUi();
         };
@@ -105,22 +105,38 @@ export class GameComponent implements OnInit, AfterViewInit {
     }
 
     private bindEventIG(): void {
-        (<any>this.tab.window ).dofus.connectionManager.on('ChatServerMessage', (msg: any) => {
-            console.log(msg);
+        (<any>this.tab.window).dofus.connectionManager.on('ChatServerMessage', (msg: any) => {
 
-            if (!this.tab.window.document.hasFocus()) {
+            if (!this.tab.window.document.hasFocus() && this.settingsService.option.notification.private_message) {
                 if (msg.channel == 9) {
-                    let constNotif = new Notification('Message de : ' + msg.senderName, {
+                    let mpNotif = new Notification('Message de : ' + msg.senderName, {
                         body: msg.content
                     });
 
-                    constNotif.onclick = () => {
+                    mpNotif.onclick = () => {
                         remote.getCurrentWindow().focus();
                         this.zone.run(() => {
                             this.selectTab.emit(this.tab);
                         });
                     };
                 }
+            }
+        });
+
+        (<any>this.tab.window).gui.eventHandlers.GameFightTurnStartMessage.push((actor: any) => {
+
+            if (!this.tab.window.document.hasFocus()
+                && this.settingsService.option.notification.fight_turn
+                && (<any>this.tab.window).gui.playerData.characterBaseInformations.id == actor.id) {
+
+                let turnNotif = new Notification('Début du tour de '+(<any>this.tab.window).gui.playerData.characterBaseInformations.name);
+
+                turnNotif.onclick = () => {
+                    remote.getCurrentWindow().focus();
+                    this.zone.run(() => {
+                        this.selectTab.emit(this.tab);
+                    });
+                };
             }
         });
 

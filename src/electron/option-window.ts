@@ -18,11 +18,24 @@ export class OptionWindow {
             this.win.close();
         });
 
+        ipcMain.on('reset-option', (event, arg) => {
+            //this.application.reloadSettings();
+            console.log('receive->reset-option');
+            settings.resetToDefaultsSync();
+            this.application.reloadSettings();
+            this.win.webContents.send('reload-settings');
+        });
+
     }
 
     static run(application: Application): void{
         if(!this.optionWindow) {
             this.optionWindow = new OptionWindow(application);
+        }
+
+        if(this.optionWindow.win){
+            this.optionWindow.win.focus();
+            return;
         }
 
         this.optionWindow.win = new electron.BrowserWindow({

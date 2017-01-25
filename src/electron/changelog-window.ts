@@ -19,6 +19,11 @@ export class ChangeLogWindow {
             this.changeLogWindow = new ChangeLogWindow(application);
         }
 
+        if(this.changeLogWindow.win){
+            this.changeLogWindow.win.focus();
+            return;
+        }
+
         this.changeLogWindow.win = new electron.BrowserWindow({
             width: 500,
             height: 800,
@@ -28,7 +33,7 @@ export class ChangeLogWindow {
             darkTheme: true,
             skipTaskbar: true,
             show: false,
-            title: 'Option',
+            title: 'ChangeLog',
         });
 
         this.changeLogWindow.win.on('closed', () => {

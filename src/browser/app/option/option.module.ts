@@ -17,6 +17,7 @@ import {InterfaceComponent} from './shortcuts/interface/interface.component';
 import {InputComponent} from './shortcuts/input/input.component';
 
 import {FormsModule} from '@angular/forms';
+import {NotificationComponent} from "./notification/notification.component";
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import {FormsModule} from '@angular/forms';
         DiverComponent,
         SpellComponent,
         ItemComponent,
-        InterfaceComponent
+        InterfaceComponent,
+        NotificationComponent
     ]
 })
 export class OptionModule {

@@ -55,6 +55,11 @@ export class InputComponent {
         delete  this._keys[this._keys.indexOf(event.keyCode)];
     }
 
+    erase(){
+        this.model = '';
+        this.modelChange.emit(this.model);
+    }
+
     constructor(
     ) {
 

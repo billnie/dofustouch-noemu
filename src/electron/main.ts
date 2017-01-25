@@ -23,6 +23,11 @@ const cmdOptions = commandLineArgs(optionDefinitions);
 
 let application: Application = null;
 
+app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+    event.preventDefault();
+    callback(true);
+});
+
 app.on('ready', () => {
 
     // Singleton

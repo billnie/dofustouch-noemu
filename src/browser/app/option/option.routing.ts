@@ -9,6 +9,7 @@ import {DiverComponent} from './shortcuts/diver/diver.component';
 import {SpellComponent} from './shortcuts/spell/spell.component';
 import {ItemComponent} from './shortcuts/item/item.component';
 import {InterfaceComponent} from './shortcuts/interface/interface.component';
+import {NotificationComponent} from "./notification/notification.component";
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
                 ]
 
             },
+            {path: 'notification', component: NotificationComponent},
         ]
     }
 ];

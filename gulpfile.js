@@ -10,8 +10,8 @@ const reload = browserSync.reload;
 var tsProject = typescript.createProject('tsconfig.json');
 
 const paths = {
-    dist: 'build',
-    distFiles: 'build/**/*',
+    dist: 'out',
+    distFiles: 'out/**/*',
     srcFiles: 'src/**/*',
     srcTsFiles: 'src/**/*.ts',
 }
@@ -31,16 +31,26 @@ gulp.task('copy:assets', ['clean'], function() {
 // TypeScript compile
 gulp.task('compile', ['clean'], function() {
     // load the tsconfig each time as it changes!
-    const tscConfig = JSON.parse(fs.readFileSync('./tsconfig.json', 'UTF8'));
+    //const tscConfig = JSON.parse(fs.readFileSync('./tsconfig.json', 'UTF8'));
     /*return gulp
         .src(paths.srcTsFiles)
         .pipe(sourcemaps.init())
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.dist));*/
-    return tsProject.src()
+    /*return tsProject.src()
         .pipe(tsProject())
-        .js.pipe(gulp.dest(paths.dist));
+        .js.pipe(gulp.dest(paths.dist));*/
+
+    let tsResult = tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(tsProject());
+
+
+    return tsResult.js
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(paths.dist));
+
 
 });
 

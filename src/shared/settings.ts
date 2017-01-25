@@ -1,10 +1,12 @@
 export interface IGeneral {
-    hidden_shop: false;
-    developper_mode: false;
+    hidden_shop: boolean;
+    developper_mode: boolean;
+    stay_connected: boolean;
     resolution: {
         x: number;
         y: number;
     }
+
 }
 
 export interface ISettings {
@@ -49,6 +51,10 @@ export interface ISettings {
                 shop: string;
                 goultine: string;
             }
+        },
+        notification: {
+            private_message: boolean;
+            fight_turn: boolean;
         }
     }
 }

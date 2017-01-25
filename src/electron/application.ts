@@ -1,3 +1,4 @@
+import {ChangeLogWindow} from "./changelog-window";
 const settings = require('electron-settings');
 import {app, ipcMain} from 'electron';
 import * as request from 'request';
@@ -17,7 +18,7 @@ export class Application {
 
     constructor(cmdOptions: any) {
         settings.defaults(DefaultSettings);
-        settings.resetToDefaultsSync(); // debug
+        //settings.resetToDefaultsSync(); // debug
         this.cmdOptions = cmdOptions;
         this.devMode = true/*settings.getSync('option.general.developer-mode')*/;
         this.updateWindow = new UpdateWindow(this);
@@ -65,22 +66,23 @@ export class Application {
         ]).then(([newAppVersion, newBuildVersion]) => {
             settings.setSync('option.appVersion', newAppVersion);
 
-            //this.updateWindow.run().then(() => {
-            //this.addWindow();
-            //  this.updateWindow.win.close();
-            //});
+            this.updateWindow.run().then(() => {
+                this.addWindow();
+                this.updateWindow.win.close();
 
-            /*if(this.cmdOptions.changelog){
+                if(this.cmdOptions.changelog){
+                    ChangeLogWindow.run(this);
+                }
+            });
 
-            }*/
-            this.addWindow();
+            // this.addWindow();
 
             ipcMain.on('load-config', (event, arg) => {
 
-                let appPath =  app.getAppPath();
+                let appPath = app.getAppPath();
 
-                if(this.cmdOptions.devmode){
-                    appPath = __dirname+'/../../';
+                if (this.cmdOptions.devmode) {
+                    appPath = __dirname + '/../../';
                 }
 
                 event.returnValue = {
@@ -101,7 +103,6 @@ export class Application {
             gWindow.reloadSettings();
         });
 
-        // TODO: reload main menu
     }
 
     addWindow(): void {

@@ -49,13 +49,14 @@ export class UpdateComponent implements OnInit {
             .on('end', () => {
                 this.zone.run(() => {
                     this.progress = 100;
-                    this.informations = 'Mise à jour terminée';
                 });
             })
             .pipe(this.saveFile);
 
         this.saveFile.addListener('finish', () => {
-            this.install();
+            this.zone.run(() => {
+                this.install();
+            });
         });
     }
 
