@@ -15,7 +15,7 @@ export class ShortCuts {
     }
 
     public bindAll(): void {
-        async.forEachOf(settings.getSync('option.shortcut.no-emu.tabs'), (shortcut: string, index: number) => {
+        async.forEachOf(settings.getSync('option.shortcuts.no_emu.tabs'), (shortcut: string, index: number) => {
             if (shortcut) {
                 electronLocalshortcut.register(this.win, ShortCuts.convert(shortcut), () => {
                     this.win.webContents.send('switch-tab', index);

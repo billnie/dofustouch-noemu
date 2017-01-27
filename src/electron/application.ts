@@ -17,8 +17,15 @@ export class Application {
 
 
     constructor(cmdOptions: any) {
+        // set defaults settings
         settings.defaults(DefaultSettings);
-        //settings.resetToDefaultsSync(); // debug
+
+
+        // if wrong settings -> reset
+        if(!settings.getSync('buildVersion')){
+            settings.resetToDefaultsSync(); // debug
+        }
+
         this.cmdOptions = cmdOptions;
         this.devMode = true/*settings.getSync('option.general.developer-mode')*/;
         this.updateWindow = new UpdateWindow(this);
@@ -65,6 +72,8 @@ export class Application {
             this.getBuildVersion(),
         ]).then(([newAppVersion, newBuildVersion]) => {
             settings.setSync('option.appVersion', newAppVersion);
+            console.log(newAppVersion);
+            console.log(newBuildVersion);
 
             this.updateWindow.run().then(() => {
                 this.addWindow();

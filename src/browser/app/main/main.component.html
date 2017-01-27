@@ -1,7 +1,10 @@
-<ul class="nav nav-pills">
+<ul class="nav nav-pills" [dragula]='"bag-one"' [dragulaModel]='tabs'>
     <li *ngFor="let tab of tabs; let i = index;" class="nav-item game-tab">
-        <a class="nav-link" [class.active]="tab.isFocus" href="#">
-            <span (click)="selectTab(tab)">{{tab.character}}</span>
+        <a class="nav-link" [class.active]="tab.isFocus" [class.notification]="tab.notification" href="#">
+            <span (click)="selectTab(tab)" [ngSwitch]="tab.character">
+                <span *ngSwitchCase="null">Non connecté</span>
+                <span *ngSwitchDefault>{{tab.character}}</span>
+            </span>
             <span class="fa fa-minus-circle" aria-hidden="true" (click)="removeTab(tab)"></span>
         </a>
     </li>

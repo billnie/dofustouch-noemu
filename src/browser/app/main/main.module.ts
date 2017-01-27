@@ -1,5 +1,6 @@
 import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {DragulaModule} from 'ng2-dragula';
 
 /* Shared Module */
 import {SharedModule} from './../../shared/shared.module';
@@ -16,7 +17,8 @@ import {ApplicationService} from "./../../shared/electron/application.service";
     imports: [
         CommonModule,
         SharedModule,
-        MainRoutingModule
+        MainRoutingModule,
+        DragulaModule
     ],
     providers: [
         TabService,

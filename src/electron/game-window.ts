@@ -45,7 +45,7 @@ export class GameWindow {
     public run(): void {
         // load the app
         this.win.loadURL(`file://${__dirname}/../browser/index.html`,
-            { userAgent: this.generateUA() });
+            { userAgent: require('random-mobile-ua').randomTabletAgent().agent });
 
         // set menu
         Menu.setApplicationMenu(this.menu);
@@ -59,9 +59,6 @@ export class GameWindow {
         }
     }
 
-    private generateUA(): string {
-        return "";
-    }
 
     public closed(cb: (e: GameWindow) => void): void {
         this.win.on('closed', () => {

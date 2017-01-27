@@ -74,7 +74,7 @@ export class GameComponent implements OnInit, AfterViewInit {
 
 
         // event -> log into the world
-        (<any>this.tab.window ).gui.playerData.on("characterSelectedSuccess", () => {
+        (<any>this.tab.window).gui.playerData.on("characterSelectedSuccess", () => {
 
             // retrieve character name and update zone.js
             this.zone.run(() => {
@@ -90,13 +90,22 @@ export class GameComponent implements OnInit, AfterViewInit {
             this.bindShortcuts();
         });
 
+        (<any>this.tab.window).gui.on("disconnect", () => {
+            this.unBindEventIG();
+            //this.
+            this.zone.run(() => {
+                this.tab.isLogged = false;
+                this.tab.character = null;
+            });
+        });
+
         // event -> electron ask for reload setting
         this.ipcRendererService.on('reload-shortcuts', (event: any, arg: any) => {
-
             if (this.tab.isLogged) {
                 console.log('receive->reload-shortcuts');
+
                 // unbind all registered shortcuts
-                this.shortCuts.unBindAll();
+                this.unBindShortcuts();
 
                 // re-bind new shortcuts
                 this.bindShortcuts();
@@ -104,42 +113,59 @@ export class GameComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private bindEventIG(): void {
-        (<any>this.tab.window).dofus.connectionManager.on('ChatServerMessage', (msg: any) => {
+    private sendMPNotif(msg: any){
+        if (!this.tab.window.document.hasFocus() && this.settingsService.option.notification.private_message) {
+            if (msg.channel == 9) {
 
-            if (!this.tab.window.document.hasFocus() && this.settingsService.option.notification.private_message) {
-                if (msg.channel == 9) {
-                    let mpNotif = new Notification('Message de : ' + msg.senderName, {
-                        body: msg.content
-                    });
+                this.tab.notification = true;
 
-                    mpNotif.onclick = () => {
-                        remote.getCurrentWindow().focus();
-                        this.zone.run(() => {
-                            this.selectTab.emit(this.tab);
-                        });
-                    };
-                }
-            }
-        });
+                let mpNotif = new Notification('Message de : ' + msg.senderName, {
+                    body: msg.content
+                });
 
-        (<any>this.tab.window).gui.eventHandlers.GameFightTurnStartMessage.push((actor: any) => {
-
-            if (!this.tab.window.document.hasFocus()
-                && this.settingsService.option.notification.fight_turn
-                && (<any>this.tab.window).gui.playerData.characterBaseInformations.id == actor.id) {
-
-                let turnNotif = new Notification('Début du tour de '+(<any>this.tab.window).gui.playerData.characterBaseInformations.name);
-
-                turnNotif.onclick = () => {
+                mpNotif.onclick = () => {
                     remote.getCurrentWindow().focus();
                     this.zone.run(() => {
                         this.selectTab.emit(this.tab);
                     });
                 };
-            }
-        });
 
+
+            }
+        }
+    }
+
+    private sendFightTurnNotif(actor:any){
+        if (!this.tab.window.document.hasFocus()
+            && this.settingsService.option.notification.fight_turn
+            && (<any>this.tab.window).gui.playerData.characterBaseInformations.id == actor.id) {
+
+            this.tab.notification = true;
+
+            let turnNotif = new Notification('Début du tour de '+(<any>this.tab.window).gui.playerData.characterBaseInformations.name);
+
+            turnNotif.onclick = () => {
+                remote.getCurrentWindow().focus();
+                this.zone.run(() => {
+                    this.selectTab.emit(this.tab);
+                });
+            };
+        }
+    }
+
+    private bindEventIG(): void {
+        (<any>this.tab.window).dofus.connectionManager.on('ChatServerMessage', this.sendMPNotif);
+        //(<any>this.tab.window).gui.eventHandlers.GameFightTurnStartMessage.push(this.sendFightTurnNotif);
+        (<any>this.tab.window).gui.on('GameFightTurnStartMessage', this.sendFightTurnNotif);
+    }
+
+    private unBindEventIG(): void {
+        (<any>this.tab.window).dofus.connectionManager.removeListener('ChatServerMessage', this.sendMPNotif);
+        (<any>this.tab.window).gui.removeListener('GameFightTurnStartMessage', this.sendFightTurnNotif);
+    }
+
+    private unBindShortcuts(): void {
+        this.shortCuts.unBindAll();
     }
 
     private bindShortcuts(): void {
@@ -152,14 +178,16 @@ export class GameComponent implements OnInit, AfterViewInit {
         // spell
         async.forEachOf(this.settingsService.option.shortcuts.spell, (shortcut: string, index: number) => {
             this.shortCuts.bind(shortcut, () => {
-                (<any>this.tab.window).gui.shortcutBar.panels.spell.slotList[index].tap();
+                (<any>this.tab.window).gui.shortcutBar._panels.spell.slotList[index].tap();
+                //(<any>this.tab.window).gui.shortcutBar.panels.spell.slotList[index].tap();
             });
         });
 
         // item
         async.forEachOf(this.settingsService.option.shortcuts.item, (shortcut: string, index: number) => {
             this.shortCuts.bind(shortcut, () => {
-                (<any>this.tab.window).gui.shortcutBar.panels.item.slotList[index].tap();
+                //(<any>this.tab.window).gui.shortcutBar.panels.item.slotList[index].tap();
+                (<any>this.tab.window).gui.shortcutBar._panels.item.slotList[index].tap();
             });
         });
 

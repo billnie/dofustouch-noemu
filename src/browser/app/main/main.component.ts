@@ -33,23 +33,17 @@ export class MainComponent implements OnInit {
         (<any>this.window).appVersion = this.applicationService.appVersion;
         (<any>this.window).buildVersion = this.applicationService.buildVersion;
 
-        console.log(this.settingsService.option.appVersion);
-        console.log(this.settingsService.option.buildVersion);
+        this.shortCuts = new ShortCuts(this.window);
 
         this.titleService.setTitle('DofusTouch No-Emu');
     }
 
-    getTabs(): void {
-        this.tabs = this.tabService.getTabs();
-        //this.activTab = this.tabService.getTab(0);
-    }
 
     addTab(): void {
         let tab: Tab = new Tab();
         this.tabService.addTab(tab);
 
         this.selectTab(tab);
-        this.getTabs();
     }
 
     removeTab(tab: Tab): void {
@@ -81,7 +75,9 @@ export class MainComponent implements OnInit {
             console.log('switch tab');
             console.log(action);
             if ((<any>Number).isInteger(action)) {
-                this.selectTab(this.tabs[action]);
+                if(typeof this.tabs[action] !== 'undefined') {
+                    this.selectTab(this.tabs[action]);
+                }
             } else {
                 let index = this.tabs.indexOf(this.activTab);
                 switch (action) {
@@ -117,7 +113,10 @@ export class MainComponent implements OnInit {
 
         // set the new one
         this.activTab = tab;
+
+        // add focus and remove noitification
         this.activTab.isFocus = true;
+        this.activTab.notification = false;
 
         //focus the iframe
         if(this.activTab.isLogged){
@@ -133,11 +132,10 @@ export class MainComponent implements OnInit {
 
 
     ngOnInit(): void {
-        console.log('hello');
-        this.getTabs();
+        this.tabs = this.tabService.getTabs();
 
-        this.shortCuts = new ShortCuts(this.window);
         this.setEventListener();
-        //this.addTab();
+
+        this.addTab();
     }
 }

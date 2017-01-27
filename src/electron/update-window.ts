@@ -143,6 +143,10 @@ export class UpdateWindow {
 
                 this.win.loadURL(`file://${__dirname}/../browser/index.html#/update/${encodeURIComponent(savePath)}/${encodeURIComponent(remoteUrl)}`);
 
+                if(this.application.devMode){
+                    this.win.webContents.openDevTools();
+                }
+
                 ipcMain.on('install-update', (event, arg) => {
                     console.log('ready to update');
 

@@ -33,6 +33,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.15",
     "@types/async": "^2.0.37",
     "@types/chrome": "0.0.38",
+    "@types/dragula": "^2.1.30",
     "@types/electron": "^1.4.30",
     "@types/keymaster": "^1.6.28",
     "@types/request": "0.0.39",
@@ -40,6 +41,7 @@
     "bootstrap": "^4.0.0-alpha.5",
     "command-line-args": "^3.0.5",
     "core-js": "^2.4.1",
+    "dragula": "^3.7.2",
     "electron-localshortcut": "^1.0.0",
     "electron-settings": "^2.2.2",
     "extract-zip": "^1.6.0",
@@ -48,6 +50,8 @@
     "jquery": "^3.1.1",
     "keymaster": "^1.6.2",
     "marked": "^0.3.6",
+    "ng2-dragula": "^1.3.0",
+    "random-mobile-ua": "^1.0.9",
     "reflect-metadata": "^0.1.3",
     "request": "^2.79.0",
     "request-progress": "^3.0.0",
@@ -92,8 +96,7 @@
       "LICENCE",
       "CHANGELOG.md"
     ],
-    "extraFiles": [
-    ],
+    "extraFiles": [],
     "mac": {
       "target": [
         "default"

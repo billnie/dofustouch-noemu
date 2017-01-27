@@ -42,6 +42,7 @@ export class UpdateComponent implements OnInit {
                 });
             })
             .on('error', (err: any) => {
+                console.log(err);
                 this.zone.run(() => {
                     this.informations = '<span class="text-error">Impossible de télécharger la mise à jour ! Veuillez réessayer ultérieurement</span>';
                 });
@@ -84,6 +85,9 @@ export class UpdateComponent implements OnInit {
                 // Defaults to 0 if no query param provided.
                 this.savePath = decodeURIComponent(params['savePath']);
                 this.remoteUrl = decodeURIComponent(params['remoteUrl']);
+
+                console.log(this.savePath);
+                console.log(this.remoteUrl);
 
 
                 this.saveFile = fs.createWriteStream(this.savePath);
