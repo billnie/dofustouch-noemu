@@ -5,6 +5,10 @@ const {app, shell} = require('electron').remote
 const {ipcRenderer} = require('electron');
 const settings = require('electron-settings');
 
+function last(arr) {
+    return arr[arr.length - 1];
+}
+
 export class Tab {
     constructor(id, client) {
         this.client = client;
@@ -66,16 +70,16 @@ export class Tab {
             }
 
             /*this.window.gui.on("GameFightStartMessage", (e)=>{
-                console.log('start...')
-                this.window.gui.fightManager.on("GameFightTurnStart", (e, t) => {
-                    var fighter = this.getFighter(e);
+             console.log('start...')
+             this.window.gui.fightManager.on("GameFightTurnStart", (e, t) => {
+             var fighter = this.getFighter(e);
 
-                    if(fighter.name == this.name){
-                        this.client.alertTurn(this.name);
-                    }
-                    console.log(i);
-                });
-            });*/
+             if(fighter.name == this.name){
+             this.client.alertTurn(this.name);
+             }
+             console.log(i);
+             });
+             });*/
         });
 
         // Character Disconnect
@@ -143,11 +147,15 @@ export class Tab {
     bindShortCut() {
         // end turn
         this.window.key(settings.getSync('option.shortcut.diver.end-turn'), () => {
-            //console.log('end turn');
-            //this.window.turnReady.tap();
-            this.window.gui.fightManager.finishTurn()
+            switch (this.window.gui.fightManager.fightState) {
+                case this.window.gui.fightManager.FIGHT_STATES.PREPARATION:
+                    last(last(this.window.gui.timeline.infoAndFighters._childrenList)._childrenList)._fightReadyBtn.tap();
+                    break;
+                case this.window.gui.fightManager.FIGHT_STATES.BATTLE:
+                    this.window.gui.fightManager.finishTurn();
+                    break;
+            }
         });
-
 
         // spell
         async.forEachOf(settings.getSync('option.shortcut.spell'), (shortcut, index, callback) => {
@@ -178,10 +186,8 @@ export class Tab {
             this.window.gui.menuBar._icons._childrenList.forEach((element, index) => {
                 if (element.id.toUpperCase() == key.toUpperCase()) {
                     this.window.key(shortcut, () => {
-                        let newIndex = index;
-                        this.window.gui.menuBar._icons._childrenList[newIndex].tap();
+                        this.window.gui.menuBar._icons._childrenList[index].tap();
                     });
-                    return;
                 }
             });
             callback();

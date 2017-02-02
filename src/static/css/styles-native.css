@@ -2639,6 +2639,7 @@ body input {
     box-sizing: border-box
 }
 
+<<<<<<< HEAD
 #dofusBody .MountDetails .mainContainer .mainInfosTop .leftColumn {
     display: inline-block;
     width: 35%
@@ -2649,6 +2650,10 @@ body input {
     display: inline-block;
     vertical-align: top;
     width: 65%
+=======
+.ContextualMenuMonster .monstersList .monsterName.miniBoss {
+    font-weight: bold
+>>>>>>> origin/master
 }
 
 #dofusBody .MountDetails .mainContainer .mainInfosTop .rightColumn .typeAndLevel {
@@ -5119,10 +5124,23 @@ body input {
     box-sizing: border-box
 }
 
+<<<<<<< HEAD
 .Table .container.header {
     min-height: 30px;
     width: 100%;
     border-image: url("../ui/table/tableHeader.png") 0 0 0 0 fill
+=======
+.MainControls .buttonBox .progressBarPrefBtn {
+    background-image: url("../ui/icons/xpBar.png"),url("../ui/buttons/bgGray.png");
+    background-repeat: no-repeat;
+    background-position: 50% 35%,50%;
+    background-size: 60%,100%
+}
+
+.playerPoints {
+    pointer-events: none;
+    display: -webkit-flex
+>>>>>>> origin/master
 }
 
 .Table .container.header .row .col {
@@ -5777,8 +5795,33 @@ body input {
     background-image: url("../ui/buttons/console.png")
 }
 
+<<<<<<< HEAD
 .MainControls .showFightsButton {
     background-image: url("../ui/optionsButtons/btn_vision_frame0.png")
+=======
+.progressGauge.guildXp .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillPurple.png") 12 fill;
+    border-style: solid;
+    border-width: 2px 0 6px 0
+}
+
+.progressGauge.mountXp .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillBlue.png") 12 fill;
+    border-style: solid;
+    border-width: 2px 0 6px 0
+}
+
+.progressGauge.jobXp .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillPink.png") 12 fill;
+    border-style: solid;
+    border-width: 2px 0 6px 0
+}
+
+.progressGauge.fightTimer .gaugeFill {
+    border-image: url("../ui/banner/gaugeFillYellow.png") 12 fill;
+    border-style: solid;
+    border-width: 6px 0 6px 6px
+>>>>>>> origin/master
 }
 
 .MainControls .showFightsButton.on {
@@ -8333,10 +8376,22 @@ body input {
     }
 }
 
+<<<<<<< HEAD
 .allowTextSelection {
     user-select: text;
     -moz-user-select: text;
     -webkit-user-select: text
+=======
+.window.adminConsoleWindow .windowTitle {
+    font-size: 16px
+}
+
+.window.adminConsoleWindow .windowBody {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column
+>>>>>>> origin/master
 }
 
 .FightBuffs {
@@ -19667,12 +19722,15 @@ body input {
     }
 }
 
+<<<<<<< HEAD
 .allowTextSelection {
     user-select: text;
     -moz-user-select: text;
     -webkit-user-select: text
 }
 
+=======
+>>>>>>> origin/master
 .window.WorldMapWindow.withoutLeftColumn .windowBody .leftColumn {
     width: 0;
     height: 0

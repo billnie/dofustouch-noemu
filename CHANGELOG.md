@@ -5,6 +5,7 @@
 - Ajout des raccourcis pour emote (Elevage) (20%)
 - Refonte de no-emu en Angular 2 et TypeScript (85%)
 
+<<<<<<< HEAD
 ## [2.0.18] - 2017-01-26
 ### Modification
 - correction des raccourcis de sort
@@ -24,6 +25,9 @@
 - Ajout de la MàJ DofusTouch 0.58.2
 
 ## [2.0.14] - 2017-01-19
+=======
+## [2.0.13] - 2017-01-19
+>>>>>>> origin/master
 ### Modification
 - Correctif pour se connecter sur la MaJ 0.58.2 (arrivera plus tard)
 
