@@ -1,0 +1,41 @@
+<ul class="nav nav-pills">
+    <li *ngFor="let tab of tabs; let i = index;" class="nav-item game-tab">
+        <a class="nav-link" [class.active]="tab.isFocus" [class.notification]="tab.notification" href="#">
+            <span (click)="selectTab(tab)" [ngSwitch]="tab.character">
+                <span *ngSwitchCase="null">Non connecté</span>
+                <span *ngSwitchDefault>{{tab.character}}</span>
+            </span>
+            <span class="fa fa-minus-circle" aria-hidden="true" (click)="removeTab(tab)"></span>
+        </a>
+    </li>
+    <li class="nav-item add-tab">
+        <a class="nav-link" href="#" (click)="addTab()">
+            <span class="fa fa-plus-circle"></span>
+        </a>
+    </li>
+</ul>
+
+<game *ngFor="let tab of tabs" (selectTab)="selectTab(tab)" [tab]="tab" [hidden]="!tab.isFocus"></game>
+
+
+<!-- <md-sidenav-layout fullscreen>
+
+    <md-sidenav #sidenav mode="side" class="app-sidenav">
+        Sidenav
+    </md-sidenav>
+
+    <md-tab-group fxFlex fxFill>
+        <md-tab *ngFor="let tab of tabs" label="{{tab.character}}" fxFlex fxFill>
+            <div class="app-content" fxFlex fxFill>
+                <p>{{tab.id}}</p>
+                <game [id]="tab.id">
+                    <iframe id="id" src="/dist/game/index.html" style="height:100%; width: 100%"></iframe>
+            </div>
+        </md-tab>
+    </md-tab-group>
+
+</md-sidenav-layout>
+
+<button md-mini-fab class="app-action" (click)="addTab()">
+                    <md-icon class="md-24">add</md-icon>
+                </button> -->

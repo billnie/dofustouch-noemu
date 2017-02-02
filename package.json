@@ -1,50 +1,119 @@
 {
   "name": "DofusTouchNE",
-<<<<<<< HEAD
-  "version": "2.0.18",
-=======
-  "version": "2.0.14",
->>>>>>> origin/master
-  "main": "src/app/main.js",
-  "description": "Emulateur open source de dofus touch pour Linux/OS X/Windows",
+  "version": "3.0.0",
+  "description": "Emulateur open source de dofus touch pour Linux/OS X/Window",
+  "main": "out/electron/main.js",
   "scripts": {
-    "install": "bower install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "build --dir",
-    "build": "node build.js",
-    "start": "electron ./"
+    "start": "electron out/electron/main.js",
+    "dist-mac": "build --mac",
+    "dist-linux": "build --linux --x64 --ia32",
+    "dist-win": "build --win --x64 --ia32",
+    "electron": "electron",
+    "lint": "tslint ./app/**/*.ts -t verbose",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
   },
-  "author": "Daniel Lefebvre",
-  "license": "GNU GPLv3",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "async": "^2.1.2",
-    "auto-updater": "^1.0.2",
-    "browser-es-module-loader": "^0.2.0",
-    "cheerio": "^0.22.0",
-    "command-line-args": "^3.0.3",
-    "electron-ejs": "^1.1.1",
+    "@angular/common": "2.2.3",
+    "@angular/compiler": "2.2.3",
+    "@angular/core": "2.2.3",
+    "@angular/flex-layout": "^2.0.0-beta.0",
+    "@angular/forms": "2.2.3",
+    "@angular/http": "2.2.3",
+    "@angular/material": "^2.0.0-alpha.11-3",
+    "@angular/platform-browser": "2.2.3",
+    "@angular/platform-browser-dynamic": "2.2.3",
+    "@angular/router": "3.2.3",
+    "@exponent/electron-cookies": "^2.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.15",
+    "@types/async": "^2.0.37",
+    "@types/chrome": "0.0.38",
+    "@types/dragula": "^2.1.30",
+    "@types/electron": "^1.4.30",
+    "@types/keymaster": "^1.6.28",
+    "@types/request": "0.0.39",
+    "async": "^2.1.4",
+    "bootstrap": "^4.0.0-alpha.5",
+    "command-line-args": "^3.0.5",
+    "core-js": "^2.4.1",
     "electron-localshortcut": "^1.0.0",
-    "electron-plugins": "^0.1.0",
     "electron-settings": "^2.2.2",
-    "fs.extra": "^1.3.2",
-    "fstream": "^1.0.10",
-    "github-flavored-markdown": "^1.0.1",
-    "i18n": "^0.8.3",
+    "extract-zip": "^1.6.0",
+    "font-awesome": "^4.7.0",
+    "hammerjs": "^2.0.8",
     "jquery": "^3.1.1",
-    "jsonfile": "^2.4.0",
-    "lodash": "^4.16.4",
-    "lowdb": "^0.14.0",
-    "request": "^2.76.0",
-    "request-progress": "^2.0.1",
-    "sudo-prompt": "^6.2.0",
-    "tar": "^2.2.1",
-    "watch-object": "^1.1.2"
+    "keymaster": "^1.6.2",
+    "marked": "^0.3.6",
+    "random-mobile-ua": "^1.0.9",
+    "reflect-metadata": "^0.1.3",
+    "request": "^2.79.0",
+    "request-progress": "^3.0.0",
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.27",
+    "ts-helpers": "^1.1.1",
+    "tslint": "^4.1.1",
+    "zone.js": "^0.6.23"
   },
-  "build": {},
   "devDependencies": {
-    "electron": "^1.4.7",
-    "bower": "^1.7.9",
-    "electron-builder": "^7.15.2",
-    "electron-reload": "^1.0.2"
+    "@types/core-js": "^0.9.35",
+    "@types/hammerjs": "^2.0.33",
+    "@types/node": "^6.0.52",
+    "canonical-path": "0.0.2",
+    "del": "^2.2.2",
+    "electron": "^1.3.4",
+    "electron-reload": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-tslint": "^7.0.1",
+    "gulp-typescript": "^3.1.3",
+    "http-server": "^0.9.0",
+    "jasmine-core": "~2.4.1",
+    "lite-server": "^2.2.0",
+    "lodash": "^4.11.1",
+    "rimraf": "^2.5.2",
+    "tslint": "*",
+    "typescript": "^2.1.4",
+    "typings": "^1.0.4",
+    "electron-builder": "^7.15.2"
+  },
+  "repository": {},
+  "build": {
+    "copyright": "Daniel LEFEVBRE",
+    "productName": "DofusTouchNE",
+    "asar": false,
+    "appId": "com.electron.${name}",
+    "files": [
+      "out/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "LICENCE",
+      "CHANGELOG.md"
+    ],
+    "extraFiles": [],
+    "mac": {
+      "target": [
+        "default"
+      ],
+      "category": "public.app-category.games"
+    },
+    "linux": {
+      "executableName": "DofusTouchNE",
+      "target": [
+        "tar.gz"
+      ],
+      "maintainer": "Daniel LEFEVBRE"
+    },
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "iconUrl": "http://dofustouch.no-emu.com/icon.ico"
+    }
   }
 }

@@ -1,0 +1,26 @@
+<div class="col-2" id="menu" style="position:fixed; height:100%">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/option/general" routerLinkActive="active">
+                General
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/option/shortcuts" routerLinkActive="active">
+                Raccourcis
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/option/notification" routerLinkActive="active">
+                Notification
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="offset-2 col-10" id="content" style="height:100%">
+    <div class="tab-content">
+         <router-outlet></router-outlet>
+    </div>
+</div>
+<button type="submit" class="btn btn-danger" id="reset" (click)="reset()">Réinitialiser</button>
+<button type="submit" class="btn btn-primary" id="validate" (click)="validate()">Valider</button>

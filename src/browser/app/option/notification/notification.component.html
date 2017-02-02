@@ -1,0 +1,25 @@
+<div class="container">
+    <p>Vous pouvez recevoir des notifications de votre jeu dofus lorsque vous êtes sur une autre application avec dofus en arrière plan. Vous pouvez être notifié de votre </p>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-offset-3 col-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="shortcut"
+                               [(ngModel)]="settingsService.option.notification.fight_turn"> début du tour (combat)
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-offset-3 col-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="shortcut"
+                               [(ngModel)]="settingsService.option.notification.private_message"> l'arrivé d'un message privé
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

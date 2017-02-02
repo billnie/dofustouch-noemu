@@ -1,0 +1,22 @@
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-6">
+            <option-shortcuts-input id="new-window" name="Nouvelle fenêtre"
+                                    [(model)]="settingsService.option.shortcuts.no_emu.new_window"></option-shortcuts-input>
+            <option-shortcuts-input id="new-tab" name="Nouveau onglet"
+                                    [(model)]="settingsService.option.shortcuts.no_emu.new_tab"></option-shortcuts-input>
+            <hr>
+            <option-shortcuts-input *ngFor="let i of range(1,5)" id="tab{{i}}" name="Onglet {{i}}"
+                                    [(model)]="settingsService.option.shortcuts.no_emu.tabs[i-1]"></option-shortcuts-input>
+        </div>
+        <div class="col-6">
+            <option-shortcuts-input id="next-tab" name="Onglet suivant"
+                                    [(model)]="settingsService.option.shortcuts.no_emu.next_tab"></option-shortcuts-input>
+            <option-shortcuts-input id="prev-tab" name="Onglet précédent"
+                                    [(model)]="settingsService.option.shortcuts.no_emu.prev_tab"></option-shortcuts-input>
+            <hr>
+            <option-shortcuts-input *ngFor="let i of range(6,10)" id="tab{{i}}" name="Onglet {{i}}"
+                                    [(model)]="settingsService.option.shortcuts.no_emu.tabs[i-1]"></option-shortcuts-input>
+        </div>
+    </div>
+</div>

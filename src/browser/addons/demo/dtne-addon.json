@@ -1,0 +1,11 @@
+{
+  "main": "./main/demo-main.module.js",
+  "option": "./option/demo-option.module.js",
+  "context": "global", // global | game
+  "deps": [
+    "window",
+    "wGame",
+    "settingsService"
+  ]
+
+}

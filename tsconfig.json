@@ -1,0 +1,37 @@
+{
+    "filesGlob": [
+        "**/*.ts"
+    ],
+    "compileOnSave": false,
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "out/",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "typings/notification.d.ts"
+        ],
+        "types": [
+            "node",
+            "hammerjs",
+            "keymaster",
+            "async",
+            "electron",
+            "rxjs"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="resolution" class="col-3 control-label">Résolution de la fenêtre</label>
+            <div class="col-6">
+                <select id="resolution" class="form-control" [(ngModel)]="_resolution" (change)="setResolution($event.target.value)">
+                    <option *ngFor="let r of resolutions" [value]="r.value">{{r.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-offset-3 col-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="shortcut"
+                               [(ngModel)]="settingsService.option.general.developper_mode"> Mode developpeur
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-offset-3 col-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="shortcut"
+                               [(ngModel)]="settingsService.option.general.hidden_shop"> Cacher le bouton Shop
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

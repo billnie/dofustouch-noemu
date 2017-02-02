@@ -1,0 +1,12 @@
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-6">
+            <option-shortcuts-input *ngFor="let i of range(1,15)" id="spell{{i}}" name="Emplacement {{i}}"
+                                    [(model)]="settingsService.option.shortcuts.item[i-1]"></option-shortcuts-input>
+        </div>
+        <div class="col-6">
+            <option-shortcuts-input *ngFor="let i of range(16,30)" id="spell{{i}}" name="Emplacement {{i}}"
+                                    [(model)]="settingsService.option.shortcuts.item[i-1]"></option-shortcuts-input>
+        </div>
+    </div>
+</div>
