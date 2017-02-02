@@ -1,43 +1,43 @@
 // Node Context
 const low = require('lowdb');
 const async = require('async');
-const {app,shell} = require('electron').remote
+const {app, shell} = require('electron').remote
 const {ipcRenderer} = require('electron');
 const settings = require('electron-settings');
 
 export class Tab {
-    constructor(id, client){
+    constructor(id, client) {
         this.client = client;
         this.id = id;
         this.ig = false;
         this.name = null;
-        this.window = window['Frame'+this.id];
+        this.window = window['Frame' + this.id];
         this.Emulator = require('electron').remote.require('./Emulator');
     }
 
-    init(){
+    init() {
         this.setEventListener();
     }
 
-    hideShop(){
-        if(settings.getSync('option.general.hidden-shop')){
+    hideShop() {
+        if (settings.getSync('option.general.hidden-shop')) {
             $(this.window.document).find('.shopBtn.Button').parent().hide();
-        }else{
+        } else {
             $(this.window.document).find('.shopBtn.Button').parent().show();
         }
     }
 
-    setEventListener(){
+    setEventListener() {
 
         // Resize windows
-        this.window.onresize = function() {
+        this.window.onresize = function () {
             this.window.gui._resizeUi();
         };
 
         //
         ipcRenderer.on('reloadShotcuts', (event, arg) => {
             console.log('reloadShotcuts')
-            if(this.ig){
+            if (this.ig) {
                 this.unbindShortCut();
                 this.bindShortCut();
                 this.hideShop();
@@ -45,7 +45,7 @@ export class Tab {
         });
 
         // Character IG
-        this.window.gui.playerData.on("characterSelectedSuccess", ()=> {
+        this.window.gui.playerData.on("characterSelectedSuccess", () => {
             console.log('connect char');
             this.ig = true;
 
@@ -59,10 +59,10 @@ export class Tab {
             this.bindShortCut();
 
             // Set donate
-            if(Math.random() <= 0.2){
-                setTimeout(()=>{
-                    this.donateNotification();
-                }, (30000+Math.random()*60000));
+            if (Math.random() <= 0.2) {
+                setTimeout(() => {
+                    //this.donateNotification();
+                }, (30000 + Math.random() * 60000));
             }
 
             /*this.window.gui.on("GameFightStartMessage", (e)=>{
@@ -87,7 +87,8 @@ export class Tab {
         });
     }
 
-    donateNotification(){
+    donateNotification() {
+        var that = this;
         let t = {
             type: this.window.gui.notificationBar.notificationType.INFORMATION,
             title: "DofusTouch No-Emu",
@@ -96,7 +97,7 @@ export class Tab {
             iconColor: "blue",
             buttons: [{
                 label: 'Plus d\'infos',
-                action: function() {
+                action: function () {
                     shell.openExternal("http://forum.no-emu.com/viewtopic.php?f=3&t=16")
                 }
             }]
@@ -105,32 +106,32 @@ export class Tab {
     }
 
 
-    unbindShortCut(){
+    unbindShortCut() {
 
         this.window.key.unbind(settings.getSync('option.shortcut.diver.end-turn'));
 
         // spell
-        async.forEachOf(settings.getSync('option.shortcut.spell'), (shortcut, index, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.spell'), (shortcut, index, callback) => {
             this.window.key.unbind(shortcut);
             callback();
         });
 
         // item
-        async.forEachOf(settings.getSync('option.shortcut.item'), (shortcut, index, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.item'), (shortcut, index, callback) => {
             this.window.key.unbind(shortcut);
             callback();
         });
 
         //diver
-        async.forEachOf(settings.getSync('option.shortcut.diver'), (shortcut, key, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.diver'), (shortcut, key, callback) => {
             this.window.key.unbind(shortcut);
             callback();
         });
 
         //interface
-        async.forEachOf(settings.getSync('option.shortcut.interface'), (shortcut, key, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.interface'), (shortcut, key, callback) => {
             this.window.gui.menuBar._icons._childrenList.forEach((element, index) => {
-                if(element.id.toUpperCase() == key.toUpperCase()){
+                if (element.id.toUpperCase() == key.toUpperCase()) {
                     this.window.key.unbind(shortcut);
                     return;
                 }
@@ -139,7 +140,7 @@ export class Tab {
         });
     }
 
-    bindShortCut(){
+    bindShortCut() {
         // end turn
         this.window.key(settings.getSync('option.shortcut.diver.end-turn'), () => {
             //console.log('end turn');
@@ -149,23 +150,23 @@ export class Tab {
 
 
         // spell
-        async.forEachOf(settings.getSync('option.shortcut.spell'), (shortcut, index, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.spell'), (shortcut, index, callback) => {
             this.window.key(shortcut, () => {
-                this.window.gui.shortcutBar.panels.spell.slotList[index].tap();
+                this.window.gui.shortcutBar._panels.spell.slotList[index].tap();
             });
             callback();
         });
 
         // item
-        async.forEachOf(settings.getSync('option.shortcut.item'), (shortcut, index, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.item'), (shortcut, index, callback) => {
             this.window.key(shortcut, () => {
-                this.window.gui.shortcutBar.panels.item.slotList[index].tap();
+                this.window.gui.shortcutBar._panels.item.slotList[index].tap();
             });
             callback();
         });
 
         //diver
-        async.forEachOf(settings.getSync('option.shortcut.diver'), (shortcut, key, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.diver'), (shortcut, key, callback) => {
             this.window.key(shortcut, () => {
 
             });
@@ -173,9 +174,9 @@ export class Tab {
         });
 
         //interface
-        async.forEachOf(settings.getSync('option.shortcut.interface'), (shortcut, key, callback) =>{
+        async.forEachOf(settings.getSync('option.shortcut.interface'), (shortcut, key, callback) => {
             this.window.gui.menuBar._icons._childrenList.forEach((element, index) => {
-                if(element.id.toUpperCase() == key.toUpperCase()){
+                if (element.id.toUpperCase() == key.toUpperCase()) {
                     this.window.key(shortcut, () => {
                         let newIndex = index;
                         this.window.gui.menuBar._icons._childrenList[newIndex].tap();

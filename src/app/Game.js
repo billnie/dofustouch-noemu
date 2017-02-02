@@ -15,7 +15,8 @@ class Game {
             useContentSize: true,
             center: true,
             webPreferences: {
-                backgroundThrottling: false
+                backgroundThrottling: false,
+                plugins: true
             }
         });
         this.shortCuts = new ShortCuts(this.win);
@@ -24,7 +25,7 @@ class Game {
     init(){
         // load default view and set user agent
         this.win.loadURL(this.Emulator.dirView('index.html'),
-        {userAgent: ''});
+        { userAgent: "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36"});
 
         // set shortcut for no-emu
         this.shortCuts.init();

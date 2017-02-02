@@ -6,8 +6,8 @@ console.log('start');
 
 // Promise is returned
 builder.build({
-    platform: ["linux"],
-    arch: "x64",
+    platform: ["win"],
+    arch: "all",
     devMetadata: {
         "build":{
             "copyright" : "Daniel LEFEVBRE",

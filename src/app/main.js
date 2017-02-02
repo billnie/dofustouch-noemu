@@ -150,6 +150,11 @@ settings.defaults({
 
 var win;
 
+app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+    event.preventDefault()
+    callback(true)
+})
+
 app.on('ready', function () {
     Emulator.init(options);
 });

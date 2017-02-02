@@ -1,0 +1,47 @@
+// cast spell
+window.gui.shortcutBar.panels.spell.slotList[1].tap
+
+// detect turn player
+window.gui.fightManager.on("GameFightTurnStart", function(e, t) {
+    console.log(this.getFighter(e));
+});
+
+// menu bar (stat, map, etc)
+gui.menuBar._icons._childrenList["0"].tap()
+
+//
+gui.loginScreen._loginForm._btnPlay.tap()
+
+
+.loginScreen._childrenList["0"]._childrenList["0"]._childrenList[3]._inputLogin.rootElement
+
+
+setInterval(function(){console.log($('.inputChat.inputBox.channel0').is(':focus'))}, 3000);
+
+class API {
+
+    API(Frame){
+        this.Frame = Frame;
+    }
+
+    tapSkill(n){
+        window[Frame].gui.shortcutBar.panels.spell.slotList[n].tap();
+    }
+}
+
+// Envoyer emote
+window.dofus.sendMessage("EmotePlayRequestMessage", {
+                emoteId: 101
+            });
+
+            // Liste emote
+
+// Liste Emote
+window.gui.playerData
+
+
+// send chat
+window.gui.chat.submit();
+
+// recup userid from maps
+window.actorManager.actors[527763].data.name

@@ -2,7 +2,64 @@
 
 ## [Prochainement]
 ### Ajout
-- Ajout des raccourcis pour emote (Elevage)
+- Ajout des raccourcis pour emote (Elevage) (20%)
+- Refonte de no-emu en Angular 2 et TypeScript (85%)
+
+## [2.0.18] - 2017-01-26
+### Modification
+- correction des raccourcis de sort
+- correction notification début de tour
+- correction du click pour les écrans tactiles
+
+## [2.0.17] - 2017-01-26
+### Ajout
+- Ajout de la MàJ DofusTouch 0.58.4
+
+## [2.0.16] - 2017-01-20
+### Ajout
+- Ajout de la MàJ DofusTouch 0.58.3
+
+## [2.0.15] - 2017-01-19
+### Ajout
+- Ajout de la MàJ DofusTouch 0.58.2
+
+## [2.0.14] - 2017-01-19
+### Modification
+- Correctif pour se connecter sur la MaJ 0.58.2 (arrivera plus tard)
+
+## [2.0.13] - 2017-01-12
+### Ajout
+- Ajout de la MàJ DofusTouch 0.58.1
+
+## [2.0.12] - 2017-01-12
+### Modification
+- Correctif pour se connecter sur la MaJ 0.58.1 (arrivera plus tard)
+
+## [2.0.11] - 2017-01-05
+### Ajout
+- Ajout de la MàJ DofusTouch 0.58.0
+### Modification
+- Correctif pour les ordinateurs avec écran tactile
+
+## [2.0.10] - 2017-01-05
+### Modification
+- Correctif pour se connecter sur la MaJ 0.58.0 (arrivera plus tard)
+
+## [2.0.9] - 2016-12-23
+### Ajout
+- Ajout de la MàJ DofusTouch 0.57.0
+
+## [2.0.8] - 2016-12-22
+### Modification
+- Correctif pour se connecter sur la MaJ 0.57.0 (arrivera plus tard)
+
+## [2.0.7] - 2016-12-18
+### Ajout
+- Ajout de la MàJ DofusTouch 0.56.5
+
+## [2.0.6] - 2016-12-15
+### Modification
+- Correctif pour se connecter sur la MaJ 0.56.5 (arrivera plus tard)
 
 ## [2.0.5] - 2016-12-09
 ### Ajout
