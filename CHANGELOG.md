@@ -1,9 +1,11 @@
 # Change Log
 
 ## [TODO]
-- Fixe dependencies 
+- Fixer les dépendances d'angular 
 
-## [Prochainement]
+
+## [3.0.1] - 2017-02-02
+- Résolution des problèmes liés à la V3
 
 ## [3.0.0] - 2017-01-02
 - Correction de l'indexDB (provoqué un ecran noir au début du lancement)

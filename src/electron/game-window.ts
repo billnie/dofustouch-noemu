@@ -22,7 +22,10 @@ export class GameWindow {
             useContentSize: true,
             center: true,
             webPreferences: {
-                backgroundThrottling: false
+                backgroundThrottling: false,
+                allowDisplayingInsecureContent: true,
+                allowRunningInsecureContent: true,
+                webSecurity: false
             }
         });
         this.shortCuts = new ShortCuts(this.win);
@@ -45,7 +48,7 @@ export class GameWindow {
     public run(): void {
         // load the app
         this.win.loadURL(`file://${__dirname}/../browser/index.html`,
-            { userAgent: require('random-mobile-ua').randomTabletAgent().agent });
+            { userAgent: ''/*require('random-mobile-ua').randomTabletAgent().agent*/ });
 
         // set menu
         Menu.setApplicationMenu(this.menu);
