@@ -11,12 +11,20 @@ DofusTouch No-Emu fonctionne sur :
  
 ## Sommaire
 - [À propos](#)
-- [Lancement :](#)
+- [Fonctionnalités principales](#)
+- [Installation :](#)
+    - [Prérequis](#)
+        - [Node.js :](#)
+    - [No-Emu](#)
+- [Utilisation :](#)
 - [Build Distribution :](#)
-    - [Docker :](#)
+    - [Windows](#)
+        - [Docker](#)
+    - [Linux](#)
+    - [Mac (OS X)](#)
 - [Développement :](#)
+    - [Introduction :](#)
     - [Structure des dossiers :](#)
-- [Todos](#)
 - [License](#)
  
 ## Fonctionnalités principales
